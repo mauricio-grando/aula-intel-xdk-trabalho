@@ -5,13 +5,21 @@
       "projectTypeName": "com.intel.xdk.projecttype.webapp",
       "src": "webapp/template-ionic-angularjs-starter/sample.zip",
       "projectGuid": "5471a518-549d-4524-be1c-7250fc97ed5d",
-      "lastModifiedDate": 1470102307575,
+      "lastModifiedDate": 1470102913673,
       "creationDate": 1470102307440
     },
     "sourceDirectory": "www",
     "cordovaPluginsDirectory": "plugins",
     "startFile": "index.html",
-    "projectFiles": {},
+    "projectFiles": {
+      "xdk-publish-meta-data.json": {
+        "settings": {
+          "project": {
+            "XDK-not-deployed": "True"
+          }
+        }
+      }
+    },
     "projectDirectories": {
       "www/xdk": {
         "settings": {
@@ -37,10 +45,11 @@
         "appName_": "EasyMarketDay",
         "appID_": "demo.ionicangularjsstarter",
         "appAccess_": {
-          "mode": "legacy",
+          "mode": "whitelist",
           "network": [],
           "intents": [],
-          "navigation": []
+          "navigation": [],
+          "properties": {}
         },
         "icons_": [],
         "splashes_": [],
@@ -62,10 +71,11 @@
         "appName_": "EasyMarketDay",
         "appID_": "demo.ionicangularjsstarter",
         "appAccess_": {
-          "mode": "legacy",
+          "mode": "whitelist",
           "network": [],
           "intents": [],
-          "navigation": []
+          "navigation": [],
+          "properties": {}
         },
         "icons_": [],
         "splashes_": [],
