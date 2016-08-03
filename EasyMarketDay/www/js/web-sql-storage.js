@@ -1,6 +1,5 @@
 // inicializa um objeto contendo os dados do banco
 var WebSqlDB = function (successCallback, errorCallback) {
-    alert('criando essa porra');
 
     this.initializeDatabase = function (successCallback, errorCallback) {
 
