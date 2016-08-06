@@ -20,7 +20,6 @@ function erro(error) {
 
         /* button  #btnmenu */
         $(document).on("click", "#btnmenu", function (evt) {
-            alert('caiu');
             // uib_sb.toggle_sidebar($("#sbmenu"));
             return false;
         });
