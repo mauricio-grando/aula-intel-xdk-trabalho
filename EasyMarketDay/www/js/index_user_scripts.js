@@ -20,10 +20,19 @@ function erro(error) {
 
         /* button  #btnmenu */
         $(document).on("click", "#btnmenu", function (evt) {
-            // uib_sb.toggle_sidebar($("#sbmenu"));
+            uib_sb.toggle_sidebar($("#sbmenu"));
             return false;
         });
 
+        /* button  #btnsair */
+    
+    
+        /* button  #btnsair */
+    
+    
+        /* button  #btnsair */
+    
+    
     }
     document.addEventListener("app.Ready", register_event_handlers, false);
 })();
