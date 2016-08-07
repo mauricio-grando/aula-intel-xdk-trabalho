@@ -94,9 +94,12 @@
     <script type="application/javascript" src="sidebar/js/sidebar.js"></script>
     <script type="application/javascript" src="xdk/ad/ionic_subpage.js"></script>
 
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
+
     <script type="application/javascript" src="js/index_uib_w_25_popup.js"></script>
 
     <script type="application/javascript" src="js/index_uib_w_26_popup.js"></script>
+    <script type="application/javascript" src="js/index_uib_w_29_popup.js"></script>
 </head>
 
 <body ng-app="myApp">
@@ -135,7 +138,7 @@
                         <span class="uib_shim"></span>
                     </div>
 
-                    <button class="button widget uib_w_24 d-margins ion button-dark ion-ios7-cart icon-left" data-uib="ionic/button" data-ver="0" id="btnsupermercados">Supermercados</button>
+                    <button class="button widget uib_w_24 d-margins ion button-dark ion-ios7-cart icon-left" data-uib="ionic/button" data-ver="0" id="btnsupermercados" ng-controller="uib_w_29_popup_controller" ng-click="listar()">Supermercados</button>
                     <br>
                     <button class="button widget uib_w_24 d-margins ion button-dark ion-ios7-cart icon-left" data-uib="ionic/button" data-ver="0" id="btnprodutos">Produtos</button>
                     <br>
@@ -150,7 +153,56 @@
                     <button class="button widget uib_w_24 d-margins ion button-dark ion-ios7-close-outline icon-left" data-uib="ionic/button" data-ver="0" id="btnsair" ng-controller="uib_w_25_popup_controller" ng-click="sair()">Sair</button>
                 </div>
             </div>
-            <div id="supermercados" class="upage-content vertical-col left hidden"></div>
+            <div id="sbsupermercados" class="upage-content vertical-col left hidden">
+                <div class="tarea widget uib_w_27 d-margins" data-uib="media/text" data-ver="0" name="uib_w_27" style="margin-top: 15px">
+                    <div class="widget-container left-receptacle"></div>
+                    <div class="widget-container right-receptacle"></div>
+                    <div class="text-container">
+                        <h2><sub><strong>Supermercados</strong></sub></h2>
+                    </div>
+                </div>
+
+                <div class="widget uib_w_10 scale-image d-margins" data-uib="media/img" data-ver="0">
+                    <figure class="figure-align">
+                        <img width="40px" height="40px" src="images/camera.png" id="imgmercado" ng-click="foto()" alt="Imagem">
+
+                        <figcaption data-position="bottom"></figcaption>
+                    </figure>
+                </div>
+
+                <label class="item item-input widget uib_w_28 d-margins" data-uib="ionic/input" data-ver="0"><span class="input-label">Nome</span>
+                    <i class="icon ion-document-text ion placeholder-icon"></i>
+                    <input id="nomemercado" type="text" placeholder="Informe o nome">
+                </label>
+                <label class="item item-input widget uib_w_28 d-margins" data-uib="ionic/input" data-ver="0" style="border: none;"><span class="input-label">Localização</span>
+                </label>
+
+                <div id="googleMap" style="width: 300px; height: 300px;"></div>
+                <br>
+                <div class="uib-grid widget uib_w_32 grid-text grid-height d-margins" data-uib="layout/grid" data-ver="1" style="height: 30px">
+                    <div class="uib-grid-row">
+                        <div class="uib-grid-cell widget-container">
+                            <button class="button widget uib_w_30 ion button-assertive ion-android-checkmark icon-left" data-uib="ionic/button" data-ver="0" id="btnsalvarmercado" ng-controller="uib_w_29_popup_controller" ng-click="salvar()">Salvar</button>
+                        </div>
+                        <div class="uib-grid-cell widget-container">
+                            <button class="button widget uib_w_31 d-margins ion button-assertive ion-android-system-back icon-left" data-uib="ionic/button" data-ver="0" id="btncancelarmercado" ng-click="limpar()">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <template class="uib-ionic-popup widget uib_w_29 d-margins" data-uib="ionic/popup" data-ver="0"></template>
+            </div>
+            <div id="sblsupermercados" class="upage-content vertical-col hidden">
+                <ion-scroll zooming="true" direction="xy">
+                    <ion-list class="widget uib_w_22 d-margins" data-uib="ionic/list" data-ver="0" id="lstsupermercados">
+                    </ion-list>
+                </ion-scroll>
+                <ion-fab id="addsupermercado" ng-controller="uib_w_29_popup_controller" ng-click="adicionar()">
+                    <i class="icon ion ion-android-add"></i>
+                </ion-fab>
+            </div>
         </div>
     </div>
 </body>

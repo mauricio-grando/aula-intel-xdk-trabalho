@@ -30,6 +30,7 @@ var WebSqlDB = function (successCallback, errorCallback) {
             " create table if not exists super_mercado ( " +
             "     codmer integer primary key autoincrement not null, " +
             "     nomemercado varchar(60) not null, " +
+			"     fotmer text not null, " +
             "     ativo integer not null " +
             " ) ";
         var sqlProduto =
@@ -114,7 +115,7 @@ var WebSqlDB = function (successCallback, errorCallback) {
     this.findSuperMercadosAll = function (callback) {
         this.db.transaction(
             function (tx) {
-                var sql = "SELECT * FROM super_mercados ORDER BY nommercado ASC";
+                var sql = "SELECT * FROM super_mercado WHERE ativo = 1 ORDER BY nomemercado ASC";
                 tx.executeSql(sql, [], function (tx, results) {
                     var len = results.rows.length,
                         supermercados = [],
@@ -185,8 +186,8 @@ var WebSqlDB = function (successCallback, errorCallback) {
         var parsedJson = JSON.parse(json);
         this.db.transaction(
             function (tx) {
-                var sql = "INSERT INTO super_mercado (nomemercado, ativo) VALUES (?, ?)";
-                tx.executeSql(sql, [parsedJson.nomemercado, parsedJson.ativo], function (tx, result) {
+                var sql = "INSERT INTO super_mercado (nomemercado, fotmer, ativo) VALUES (?, ?, ?)";
+                tx.executeSql(sql, [parsedJson.nomemercado, parsedJson.fotmer, parsedJson.ativo], function (tx, result) {
                     // If results rows
                     callback(result.rowsAffected === 1 ? true : false);
                 });
