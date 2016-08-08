@@ -64,7 +64,7 @@ function uib_w_29_popup_controller($scope, $ionicPopup) {
                                 text: 'OK',
                                 type: 'button-positivo',
                                 onTap: function (e) {
-                                    $scope.limpar();
+                                    $scope.cancelar();
                                     $scope.listar();
                                 }
                                 }]
