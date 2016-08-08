@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-ad-project/sample.zip",
       "projectGuid": "b22c7ab3-c286-48f9-ac48-f372d64a7a5c",
-      "lastModifiedDate": 1470610473227,
+      "lastModifiedDate": 1470614794065,
       "creationDate": 1470502879055
     },
     "XDK-app-designer": "true",
@@ -98,6 +98,24 @@
           ]
         },
         "description": "Cordova Geolocation Plugin",
+        "data": {},
+        "dependedBy": []
+      },
+      {
+        "id": "cordova-plugin-dialogs",
+        "name": "Notification",
+        "version": "1.2.0",
+        "originType": "cordova.io",
+        "origin": "cordova-plugin-dialogs",
+        "gitref": "",
+        "paramvals": {},
+        "sourceLocation": "plugins/cordova-plugin-dialogs",
+        "selectedState": "Included",
+        "checksum": "1af74557",
+        "dependsOn": [],
+        "topLevel": true,
+        "permissions": {},
+        "description": "Cordova Notification Plugin",
         "data": {},
         "dependedBy": []
       }

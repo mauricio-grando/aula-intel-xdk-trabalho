@@ -19,7 +19,7 @@ function uib_w_29_popup_controller($scope, $ionicPopup) {
                     '<img src="' + foto + '" height="80" width="80"> ' +
                     ' <label><strong> ' + supermercados[i].nomemercado + ' </strong></label>' +
                     '<div class="buttons"> ' +
-                    ' <button id="' + supermercados[i].codmer + '" name = "' + i + '" class="button button-assertive"><i class="icon icon ion-trash-b"></i> ' +
+                    ' <button id="' + supermercados[i].codmer + '" name = "' + i + '" class="button button-assertive" onclick="deletarSupermercado(this.id)"><i class="icon icon ion-trash-b"></i> ' +
                     ' </button>' + ' </div>' + '</ion-item>'
                 );
             }
@@ -75,8 +75,10 @@ function uib_w_29_popup_controller($scope, $ionicPopup) {
 
     };
 
-    $scope.limpar = function () {
+    $scope.cancelar = function () {
         $("#nomemercado").val("");
+        $("#imgmercado").val("");
+        activate_subpage("#sblsupermercados");
     };
 
     $scope.mapPosition = function () {
