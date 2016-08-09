@@ -59,6 +59,11 @@ var WebSqlDB = function (successCallback, errorCallback) {
             "     precoprod real not null, " +
             "     totalprod real not null " +
             " ); ";
+		var sqlCategoriaProduto =
+            " create table if not exists categorias_produto ( " +
+            "     codcat integer primary key autoincrement not null, " +
+            "     nomecat integer not null " +
+            " ); ";
 
         tx.executeSql(sqlSuperMercado, null,
             function () { // Success callback
@@ -87,6 +92,13 @@ var WebSqlDB = function (successCallback, errorCallback) {
             },
             function (tx, error) {
                 alert('Create table compras_produtos error: ' + error.message);
+            });
+		tx.executeSql(sqlCategoriaProduto, null,
+            function () {
+                console.log('CategoriaProduto -> DB Tables created succesfully');
+            },
+            function (tx, error) {
+                alert('Create table categorias_produto error: ' + error.message);
             });
     };
 
@@ -130,6 +142,28 @@ var WebSqlDB = function (successCallback, errorCallback) {
             },
             function (tx, error) {
                 alert("findSuperMercadosAll Error: " + error.message);
+            }
+        );
+    };
+	
+	this.findCategoriasAll = function (callback) {
+        this.db.transaction(
+            function (tx) {
+                var sql = "SELECT * FROM categorias_produto ORDER BY nomecat ASC";
+                tx.executeSql(sql, [], function (tx, results) {
+                    var len = results.rows.length,
+                        categorias = [],
+                        i = 0;
+                    for (; i < len; i++) {
+                        categorias[i] = results.rows.item(i);
+                    }
+
+                    // Passes a array with values back to calling function
+                    callback(categorias);
+                });
+            },
+            function (tx, error) {
+                alert("findCategoriasAll Error: " + error.message);
             }
         );
     };

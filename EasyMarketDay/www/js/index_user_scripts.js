@@ -18,20 +18,14 @@ function erro(error) {
     */
     function register_event_handlers() {
 
+        $("#precoproduto").maskMoney();
+
         /* button  #btnmenu */
         $(document).on("click", "#btnmenu", function (evt) {
-            uib_sb.toggle_sidebar($("#sbmenu"));
+            $("#sbmenu").toggle();
+            // uib_sb.toggle_sidebar($("#sbmenu"));
             return false;
         });
-
-        /* button  #btnsair */
-
-
-        /* button  #btnsair */
-
-
-        /* button  #btnsair */
-
 
     }
     document.addEventListener("app.Ready", register_event_handlers, false);

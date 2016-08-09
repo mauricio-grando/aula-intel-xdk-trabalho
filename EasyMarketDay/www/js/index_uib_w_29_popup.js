@@ -1,7 +1,7 @@
 function uib_w_29_popup_controller($scope, $ionicPopup) {
 
     $scope.listar = function () {
-        uib_sb.close_sidebar($("#sbmenu"));
+        $("#sbmenu").hide();
 
         db.findSuperMercadosAll(function (supermercados) {
             // limpando a lista
@@ -16,11 +16,11 @@ function uib_w_29_popup_controller($scope, $ionicPopup) {
                 // adicionando os itens na lista
                 $("#lstsupermercados").prepend(
                     '<ion-item id="' + supermercados[i].codmer + '" class="item widget uib_w_6 item-button-right" data-uib="ionic/list_item" data-ver="0"> ' +
-                    '<img src="' + foto + '" height="80" width="80"> ' +
-                    ' <label><strong> ' + supermercados[i].nomemercado + ' </strong></label>' +
                     '<div class="buttons"> ' +
-                    ' <button id="' + supermercados[i].codmer + '" name = "' + i + '" class="button button-assertive" onclick="deletarSupermercado(this.id)"><i class="icon icon ion-trash-b"></i> ' +
-                    ' </button>' + ' </div>' + '</ion-item>'
+                    ' <button id="' + supermercados[i].codmer + '" name="' + i + '" class="button button-assertive" onclick="deletarSupermercado(this.id)"><i class="icon icon ion-trash-b"></i> ' + ' </button></div>' +
+                    '<img src="' + foto + '" height="100" width="100" style="float: left"> ' +
+                    supermercados[i].nomemercado +
+                    '</ion-item>'
                 );
             }
         });
@@ -57,7 +57,7 @@ function uib_w_29_popup_controller($scope, $ionicPopup) {
             }), function (status) {
                 if (status === true) {
                     var confirmPopup = $ionicPopup.alert({
-                        title: 'Frequência',
+                        title: 'Supermercados',
                         template: 'Cadastro realizado com sucesso.',
                         buttons: [
                             {
