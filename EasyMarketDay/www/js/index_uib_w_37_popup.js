@@ -19,12 +19,22 @@ function uib_w_37_popup_controller($scope, $ionicPopup) {
             }
         });
 
-        activate_subpage("#sbprodutos");
+        activate_subpage("#sblprodutos");
         return false;
     };
 
     $scope.adicionar = function () {
-        $scope.montar();
+        activate_subpage("#sbprodutos");
+    };
+
+    $scope.cancelar = function () {
+        $("#nomeproduto").val("");
+        $("#descricaoproduto").val("");
+        $("#imgproduto").val("");
+        $("#precoproduto").val("");
+        $("#selcatproduto").val($("#selcatproduto option:first").val());
+        $("#selmercadoproduto").val($("#selmercadoproduto option:first").val());
+        activate_subpage("#sblprodutos");
     };
 
     $scope.foto = function () {
