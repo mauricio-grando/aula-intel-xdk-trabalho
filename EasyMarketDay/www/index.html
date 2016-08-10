@@ -97,6 +97,7 @@
     <script src="http://maps.googleapis.com/maps/api/js"></script>
 
     <script type="application/javascript" src="js/jquery.maskMoney.js"></script>
+    <script type="application/javascript" src="js/produto.js"></script>
     <script type="application/javascript" src="js/index_uib_w_25_popup.js"></script>
 
     <script type="application/javascript" src="js/index_uib_w_26_popup.js"></script>
@@ -143,7 +144,7 @@
 
                     <button class="button widget uib_w_24 d-margins ion button-dark ion-ios7-cart icon-left" data-uib="ionic/button" data-ver="0" id="btnsupermercados" ng-controller="uib_w_29_popup_controller" ng-click="listar()">Supermercados</button>
                     <br>
-                    <button class="button widget uib_w_24 d-margins ion button-dark ion-ios7-cart icon-left" data-uib="ionic/button" data-ver="0" ng-controller="uib_w_37_popup_controller" ng-click="montar()" id="btnprodutos">Produtos</button>
+                    <button class="button widget uib_w_24 d-margins ion button-dark ion-ios7-cart icon-left" data-uib="ionic/button" data-ver="0" onclick="listarProdutos()" id="btnprodutos">Produtos</button>
                     <br>
                     <button class="button widget uib_w_24 d-margins ion button-dark ion-ios7-eye-outline icon-left" data-uib="ionic/button" data-ver="0" id="btncomparar">Comparar Produtos</button>
                     <br>
@@ -241,10 +242,10 @@
                 <div class="uib-grid widget uib_w_32 grid-text grid-height d-margins" data-uib="layout/grid" data-ver="1" style="height: 30px">
                     <div class="uib-grid-row">
                         <div class="uib-grid-cell widget-container">
-                            <button class="button widget uib_w_30 ion button-assertive ion-android-checkmark icon-left" data-uib="ionic/button" data-ver="0" id="btnsalvarmercado" ng-controller="uib_w_37_popup_controller" ng-click="salvar()">Salvar</button>
+                            <button class="button widget uib_w_30 ion button-assertive ion-android-checkmark icon-left" data-uib="ionic/button" data-ver="0" id="btnsalvarproduto" onclick="salvarProduto()">Salvar</button>
                         </div>
                         <div class="uib-grid-cell widget-container">
-                            <button class="button widget uib_w_31 d-margins ion button-assertive ion-android-system-back icon-left" data-uib="ionic/button" data-ver="0" id="btncancelarmercado" ng-controller="uib_w_37_popup_controller" ng-click="cancelar()">Cancelar</button>
+                            <button class="button widget uib_w_31 d-margins ion button-assertive ion-android-system-back icon-left" data-uib="ionic/button" data-ver="0" id="btncancelarproduto" onclick="cancelarProduto()">Cancelar</button>
                         </div>
                     </div>
                 </div>
@@ -258,7 +259,7 @@
                     <ion-list class="widget uib_w_22 d-margins" data-uib="ionic/list" data-ver="0" id="lstprodutos">
                     </ion-list>
                 </ion-scroll>
-                <ion-fab id="addproduto" ng-controller="uib_w_37_popup_controller" ng-click="adicionar()">
+                <ion-fab id="addproduto" onclick="montarProdutos()">
                     <i class="icon ion ion-android-add" style="margin: 30px 10px 25px 0px;"></i>
                 </ion-fab>
             </div>

@@ -167,6 +167,30 @@ var WebSqlDB = function (successCallback, errorCallback) {
             }
         );
     };
+	
+	this.findProdutosAll = function (callback) {
+        this.db.transaction(
+            function (tx) {
+                var sql = "SELECT p.codprod as codprod, p.nomeprod as nomeprod, p.descprod as descricaoprod, p.fotprod as fotprod, p.preco as preco, m.nomemercado as nomemercado, c.nomecat as nomecat, m.codmer as codmer, c.codcat as codcat " +
+				" FROM produto p INNER JOIN super_mercado m INNER JOIN categorias_produto c " +
+				" WHERE p.catprod = c.codcat AND p.codmer = m.codmer AND p.ativo = 1 ORDER BY p.nomeprod ASC;";
+                tx.executeSql(sql, [], function (tx, results) {
+                    var len = results.rows.length,
+                        produtos = [],
+                        i = 0;
+                    for (; i < len; i++) {
+                        produtos[i] = results.rows.item(i);
+                    }
+
+                    // Passes a array with values back to calling function
+                    callback(produtos);
+                });
+            },
+            function (tx, error) {
+                alert("findProdutosAll Error: " + error.message);
+            }
+        );
+    };
 
     this.findCompras = function (callback) {
         this.db.transaction(
@@ -276,8 +300,8 @@ var WebSqlDB = function (successCallback, errorCallback) {
         var parsedJson = JSON.parse(json);
         this.db.transaction(
             function (tx) {
-                var sql = "UPDATE produto SET nomeprod=?, descprod=?, fotprod=?, preco=?, catprod=? WHERE codprod=?";
-                tx.executeSql(sql, [parsedJson.nomeprod, parsedJson.descprod, parsedJson.fotprod, parsedJson.preco, parsedJson.catprod, parsedJson.codprod], function (tx, result) {
+                var sql = "UPDATE produto SET nomeprod=?, descprod=?, fotprod=?, preco=?, catprod=?, codmer=? WHERE codprod=?";
+                tx.executeSql(sql, [parsedJson.nomeprod, parsedJson.descprod, parsedJson.fotprod, parsedJson.preco, parsedJson.catprod, parsedJson.codmer, parsedJson.codprod], function (tx, result) {
                     // If results rows
                     callback(result.rowsAffected === 1 ? true : false);
                 });
@@ -291,8 +315,8 @@ var WebSqlDB = function (successCallback, errorCallback) {
         var parsedJson = JSON.parse(json);
         this.db.transaction(
             function (tx) {
-                var sql = "UPDATE produtos SET ativo = 0 WHERE codprod=?";
-                tx.executeSql(sql, [parsedJson.codmer], function (tx, result) {
+                var sql = "UPDATE produto SET ativo = 0 WHERE codprod=?";
+                tx.executeSql(sql, [parsedJson.codprod], function (tx, result) {
                     callback(result.rowsAffected === 1 ? true : false);
                 });
             }
