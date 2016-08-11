@@ -12,7 +12,7 @@ var WebSqlDB = function (successCallback, errorCallback) {
         this.db.transaction(
             function (tx) {
                 self.createTables(tx);
-                // self.addSampleData(tx);
+                self.addSampleData(tx);
             },
             function (error) {
                 console.log('Transaction error: ' + error);
@@ -101,6 +101,87 @@ var WebSqlDB = function (successCallback, errorCallback) {
                 alert('Create table categorias_produto error: ' + error.message);
             });
     };
+	
+	this.addSampleData = function (tx) {
+		// Array of objects
+        var categorias = [
+			{
+                "codcat": 1,
+                "nomecat": "Frios"
+            },
+			{
+                "codcat": 2,
+                "nomecat": "Bebidas"
+            },
+			{
+                "codcat": 3,
+                "nomecat": "Hortifruti"
+            },
+			{
+                "codcat": 4,
+                "nomecat": "Grãos"
+            },
+			{
+                "codcat": 5,
+                "nomecat": "Limpeza"
+            },
+			{
+                "codcat": 6,
+                "nomecat": "Doces"
+            },
+			{
+                "codcat": 7,
+                "nomecat": "Carnes"
+            },
+			{
+                "codcat": 8,
+                "nomecat": "Embutidos"
+            },
+			{
+                "codcat": 9,
+                "nomecat": "Padaria"
+            },
+			{
+                "codcat": 10,
+                "nomecat": "Utensílios de Cozinha"
+            },
+			{
+                "codcat": 11,
+                "nomecat": "Talheres"
+            },
+			{
+                "codcat": 12,
+                "nomecat": "Toalhas"
+            },
+			{
+                "codcat": 12,
+                "nomecat": "Caseiros"
+            },
+			{
+                "codcat": 13,
+                "nomecat": "Biscoitos"
+            }			
+		];
+		
+		var cat = categorias.length;
+
+        var sqlT = "INSERT OR REPLACE INTO categorias_produto " +
+            " (codcat, nomecat) VALUES (?, ?)";
+			
+		var c;
+
+        // Loop through sample data array and insert into db
+        for (var i = 0; i < cat; i++) {
+            c = categorias[i];
+            tx.executeSql(sqlT, [c.codcat, c.nomecat],
+                function () { // Success callback
+                    console.log('DEBUG - 4. Sample data DB insert success');
+                },
+                function (tx, error) { // Error callback
+                    alert('INSERT error: ' + error.message);
+                });
+        }
+	 };
 
     this.findProdutosBySuperMercado = function (codmer, callback) {
         this.db.transaction(
@@ -164,6 +245,21 @@ var WebSqlDB = function (successCallback, errorCallback) {
             },
             function (tx, error) {
                 alert("findCategoriasAll Error: " + error.message);
+            }
+        );
+    };
+	
+	this.findProdutoById = function (codprod, callback) {
+        this.db.transaction(
+            function (tx) {
+                var sql = "SELECT * FROM produto WHERE codprod = ?";
+				tx.executeSql(sql, [codprod], function (tx, results) {
+                    // This callback returns the first results.rows.item if rows.length is 1 or return null
+                    callback(results.rows.length === 1 ? results.rows.item(0) : null);
+                });
+            },
+            function (tx, error) {
+                alert("findProdutoById Error: " + error.message);
             }
         );
     };
@@ -245,6 +341,7 @@ var WebSqlDB = function (successCallback, errorCallback) {
         this.db.transaction(
             function (tx) {
                 var sql = "INSERT INTO super_mercado (nomemercado, fotmer, ativo) VALUES (?, ?, ?)";
+				alert(parsedJson.fotmer);
                 tx.executeSql(sql, [parsedJson.nomemercado, parsedJson.fotmer, parsedJson.ativo], function (tx, result) {
                     // If results rows
                     callback(result.rowsAffected === 1 ? true : false);

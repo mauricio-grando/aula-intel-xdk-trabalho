@@ -7,33 +7,31 @@ function listarProdutos() {
         // limpando a lista
         $("#lstprodutos").html("");
         for (var i = 0; i < produtos.length; i++) {
-            // se o produto n�o tem foto, pegamos uma padr�o
+            // se o produto não tem foto, pegamos uma padrão
             var foto = produtos[i].fotprod;
-            if (!foto) {
+            if (!foto || foto === "undefined") {
                 foto = "images/camera.png";
             }
 
             // adicionando os itens na lista
             $("#lstprodutos").prepend(
                 '<ion-item id="' + produtos[i].codprod + '" class="item widget uib_w_6 item-button-right" data-uib="ionic/list_item" data-ver="0"> ' +
-                '<div class="buttons"> ' +
-                ' <button id="' + produtos[i].codprod + '" class="button button-positive"><i class="icon icon ion-edit" onclick="editarProduto(' + produtos[i] +
-                ')"></i></button> ' +
-                ' <button id="' + produtos[i].codprod + '" name = "' + i + '" class="button button-assertive" onclick="deletarProduto(this.id)"><i class="icon icon ion-trash-b"></i> ' +
-                ' </button>' +
-                ' </div>' +
-                '<img src="' + foto + '" height="32" width="32"> ' +
+                '<div style="float: left"><img src="' + foto + '" height="50" width="50"> ' +
                 produtos[i].nomeprod + ' - ' + produtos[i].nomecat + '<br/>' +
-                produtos[i].nomemercado + '</ion-item>'
+                produtos[i].nomemercado + '</div>' +
+                '<div class="buttons"> ' +
+                ' <button id="' + produtos[i].codprod + '" class="button button-positive" onclick="editarProduto(this.id)"><i class="icon icon ion-edit"></i></button> ' +
+                ' <button id="' + produtos[i].codprod + '" class="button button-assertive" onclick="deletarProduto(this.id)"><i class="icon icon ion-trash-b"></i> ' + ' </button> </div></ion-item>'
             );
         }
     });
     activate_subpage("#sblprodutos");
     return false;
-};
+}
 
 function montarProdutos() {
     $("#sbmenu").hide();
+    limpar();
 
     db.findCategoriasAll(function (categorias) {
         for (var i = 0; i < categorias.length; i++) {
@@ -51,9 +49,11 @@ function montarProdutos() {
         }
     });
 
+    $("#btnsalvarproduto").attr("onclick", "salvarProduto()");
+
     activate_subpage("#sbprodutos");
     return false;
-};
+}
 
 function deletarProduto(codprod) {
     navigator.notification.confirm(
@@ -84,39 +84,42 @@ function deletarProduto(codprod) {
     );
 }
 
-function editarProduto(produto) {
-    alert('caiu');
-    db.findCategoriasAll(function (categorias) {
-        for (var i = 0; i < categorias.length; i++) {
-            // adicionando os itens na lista
-            $("#selcatproduto").append(
-                '<option value=' + categorias[i].codcat + '>' + categorias[i].nomecat + '</option>');
-        }
+function editarProduto(codprod) {
+
+    db.findProdutoById(codprod, function (result) {
+        var produto = result;
+
+        db.findCategoriasAll(function (categorias) {
+            for (var i = 0; i < categorias.length; i++) {
+                // adicionando os itens na lista
+                $("#selcatproduto").append(
+                    '<option value=' + categorias[i].codcat + '>' + categorias[i].nomecat + '</option>');
+            }
+        });
+
+        db.findSuperMercadosAll(function (supermercados) {
+            for (var i = 0; i < supermercados.length; i++) {
+                // adicionando os itens na lista
+                $("#selmercadoproduto").append(
+                    '<option value=' + supermercados[i].codmer + '>' + supermercados[i].nomemercado + '</option>');
+            }
+        });
+
+        $("#selmercadoproduto").val(produto.codmer);
+        $("#selcatproduto").val(produto.codcat);
+        $("#nomeproduto").val(produto.nomeprod);
+        $("#descricaoproduto").val(produto.descprod);
+        $("#precoproduto").val(produto.preco);
+        $("#imgproduto").attr('src', produto.fotprod);
+
+        $("#btnsalvarproduto").attr("onclick", "salvarProduto(" + codprod + ")");
+
+        activate_subpage("#sbprodutos");
     });
-
-    db.findSuperMercadosAll(function (supermercados) {
-        for (var i = 0; i < supermercados.length; i++) {
-            // adicionando os itens na lista
-            $("#selmercadoproduto").append(
-                '<option value=' + supermercados[i].codmer + '>' + supermercados[i].nomemercado + '</option>');
-        }
-    });
-
-    $("#selmercadoproduto").val(produto.codmer);
-    $("#selcatproduto").val(produto.codcat);
-    $("#nomeproduto").val(produto.nomeprod);
-    $("#descricaoproduto").val(produto.descprod);
-    $("#precopopduto").val(produto.preco);
-    $("#imgproduto").attr('src', produto.fotoprod);
-
-    $("#btnsalvarproduto").attr("onclick", "salvarProduto(" + produto.codprod + ")");
-
-    activate_subpage("#sbprodutos");
     return false;
 }
 
 function salvarProduto(codprod) {
-    alert('caiu');
     if ($("#nomeproduto").val() === "") {
         navigator.notification.alert(
             'Por favor preencha o nome do produto.',
@@ -141,7 +144,6 @@ function salvarProduto(codprod) {
         );
 
     } else if (!codprod) {
-        alert('caiu');
         db.insertProduto(JSON.stringify({
             "nomeprod": $("#nomeproduto").val(),
             "descprod": $("#descricaoproduto").val(),
@@ -186,14 +188,18 @@ function salvarProduto(codprod) {
 
         listarProdutos();
     }
-};
+}
 
-function cancelarProduto() {
+function limpar() {
     $("#nomeproduto").val("");
     $("#descricaoproduto").val("");
     $("#imgproduto").val("");
     $("#precoproduto").val("");
     $("#selcatproduto").val($("#selcatproduto option:first").val());
     $("#selmercadoproduto").val($("#selmercadoproduto option:first").val());
+}
+
+function cancelarProduto() {
+    limpar();
     activate_subpage("#sblprodutos");
-};
+}
