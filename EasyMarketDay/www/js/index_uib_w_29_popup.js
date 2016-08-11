@@ -48,9 +48,13 @@ function uib_w_29_popup_controller($scope, $ionicPopup) {
             });
 
         } else {
+
+            var a = $("#imagemercado").val().toString();
+            alert(a);
             db.insertSuperMercado(JSON.stringify({
+
                 "nomemercado": $("#nomemercado").val(),
-                "fotmer": $("#imgmercado").val(),
+                "fotmer": $("#imagemercado").val(),
                 "ativo": 1
             }), function (status) {
                 if (status === true) {
@@ -75,7 +79,7 @@ function uib_w_29_popup_controller($scope, $ionicPopup) {
 
     $scope.cancelar = function () {
         $("#nomemercado").val("");
-        $("#imgmercado").val("");
+        $("#imagemercado").val("");
         activate_subpage("#sblsupermercados");
     };
 
@@ -141,7 +145,7 @@ function uib_w_29_popup_controller($scope, $ionicPopup) {
     $scope.foto = function () {
         navigator.camera.getPicture(
             function (foto) {
-                $("#imgmercado").attr("src", "data:image/jpeg;base64," + foto);
+                $("#imagemercado").attr("src", "data:image/jpeg;base64," + foto);
             },
             function (error) {
                 alert("Erro na captura da foto!" + erroFoto);

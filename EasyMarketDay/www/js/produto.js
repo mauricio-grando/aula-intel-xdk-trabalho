@@ -186,6 +186,8 @@ function salvarProduto(codprod) {
             }
         });
 
+        alert($("#imgproduto").val());
+
         listarProdutos();
     }
 }
