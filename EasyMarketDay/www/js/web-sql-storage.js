@@ -346,6 +346,7 @@ var WebSqlDB = function (successCallback, errorCallback) {
 				alert(parsedJson.fotmer);
                 tx.executeSql(sql, [parsedJson.nomemercado, parsedJson.fotmer, parsedJson.ativo], function (tx, result) {
                     // If results rows
+					alert(result.message);
                     callback(result.rowsAffected === 1 ? true : false);
                 });
             }
@@ -388,7 +389,8 @@ var WebSqlDB = function (successCallback, errorCallback) {
                 var sql = "INSERT INTO produto (nomeprod, descprod, fotprod, codmer, preco, catprod, ativo) VALUES( ? , ? , ? , ? , ? , ? , 1)";
                 tx.executeSql(sql, [parsedJson.nomeprod, parsedJson.descprod, parsedJson.fotprod, parsedJson.codmer, parsedJson.preco, parsedJson.catprod], function (tx, result) {
                     // If results rows
-                    callback(result.rowsAffected === 1 ? true : false);
+                    // callback(result.rowsAffected === 1 ? true : false);
+					callback(result);
                 });
             }
         );

@@ -48,13 +48,10 @@ function uib_w_29_popup_controller($scope, $ionicPopup) {
             });
 
         } else {
-
-            var a = $("#imagemercado").val().toString();
-            alert(a);
             db.insertSuperMercado(JSON.stringify({
 
                 "nomemercado": $("#nomemercado").val(),
-                "fotmer": $("#imagemercado").val(),
+                "fotmer": $("#imagemercado").attr("src"),
                 "ativo": 1
             }), function (status) {
                 if (status === true) {

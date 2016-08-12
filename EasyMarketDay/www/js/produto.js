@@ -120,6 +120,9 @@ function editarProduto(codprod) {
 }
 
 function salvarProduto(codprod) {
+
+    alert('salvando');
+
     if ($("#nomeproduto").val() === "") {
         navigator.notification.alert(
             'Por favor preencha o nome do produto.',
@@ -144,15 +147,19 @@ function salvarProduto(codprod) {
         );
 
     } else if (!codprod) {
+        alert('insert');
+
         db.insertProduto(JSON.stringify({
             "nomeprod": $("#nomeproduto").val(),
             "descprod": $("#descricaoproduto").val(),
-            "fotprod": $("#imgproduto").val(),
+            "fotprod": $("#imgproduto").attr("src"),
             "codmer": $("#selmercadoproduto").val(),
             "preco": $("#precoproduto").val(),
-            "catprod": $("#selcatproduto").val(),
-            "ativo": 1
-        }), function (status) {
+            "catprod": $("#selcatproduto").val()
+        }), function (result) {
+            alert(result);
+            var status = result.rowsAffected === 1 ? true : false;
+
             if (status === true) {
                 navigator.notification.alert(
                     'Cadastro realizado com sucesso.',
@@ -166,6 +173,7 @@ function salvarProduto(codprod) {
         listarProdutos();
 
     } else {
+        alert('update');
         db.updateProduto(JSON.stringify({
             "nomeprod": $("#nomeproduto").val(),
             "descprod": $("#descricaoproduto").val(),

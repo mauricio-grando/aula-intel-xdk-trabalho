@@ -11,23 +11,19 @@ function uib_w_37_popup_controller($scope, $ionicPopup) {
     };
 
     $scope.foto = function () {
-        navigator.camera.getPicture(
-            onSuccessFoto,
-            onErrorFoto, {
-                quality: 50,
-                destinationType: Camera.DestinationType.DATA_URL
-            }
-        );
-
+        navigator.camera.getPicture(onSuccess, onFail, {
+            quality: 50,
+            destinationType: Camera.DestinationType.DATA_URL
+        });
     };
 
-    function onErrorFoto(erroFoto) {
-        alert("Erro na captura da foto!" + erroFoto);
+    function onSuccess(imageData) {
+        var image = document.getElementById('imgproduto');
+        image.src = "data:image/jpeg;base64," + imageData;
     };
 
-    function onSuccessFoto(foto) {
-        // exibindo a foto
-        $("#imgproduto").attr("src", "data:image/jpeg;base64," + foto);
-    };
+    function onFail(message) {;
+        alert('Failed because: ' + message);
+    }
 
 }
