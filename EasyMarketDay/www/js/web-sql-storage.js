@@ -186,7 +186,9 @@ var WebSqlDB = function (successCallback, errorCallback) {
     this.findProdutosBySuperMercado = function (codmer, callback) {
         this.db.transaction(
             function (tx) {
-                var sql = "SELECT * FROM produtos WHERE codmer=? ORDER BY catprod ASC";
+                var sql = "SELECT p.codprod as codprod, p.nomeprod as nomeprod, p.descprod as descricaoprod, p.fotprod as fotprod, p.preco as preco, m.nomemercado as nomemercado, c.nomecat as nomecat, m.codmer as codmer, c.codcat as codcat " +
+				" FROM produto p INNER JOIN super_mercado m INNER JOIN categorias_produto c " +
+				" WHERE p.codmer = ? AND p.catprod = c.codcat AND p.codmer = m.codmer AND p.ativo = 1 ORDER BY p.nomeprod ASC;";
                 tx.executeSql(sql, [codmer], function (tx, results) {
                     var len = results.rows.length,
                         produtos = [],

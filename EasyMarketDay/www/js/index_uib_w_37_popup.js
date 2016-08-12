@@ -12,16 +12,22 @@ function uib_w_37_popup_controller($scope, $ionicPopup) {
 
     $scope.foto = function () {
         navigator.camera.getPicture(
-            function (foto) {
-                $("#imgproduto").attr("src", "data:image/jpeg;base64," + foto);
-            },
-            function (error) {
-                alert("Erro na captura da foto!" + erroFoto);
-            }, {
+            onSuccessFoto,
+            onErrorFoto, {
                 quality: 50,
                 destinationType: Camera.DestinationType.DATA_URL
             }
         );
+
+    };
+
+    function onErrorFoto(erroFoto) {
+        alert("Erro na captura da foto!" + erroFoto);
+    };
+
+    function onSuccessFoto(foto) {
+        // exibindo a foto
+        $("#imgproduto").attr("src", "data:image/jpeg;base64," + foto);
     };
 
 }

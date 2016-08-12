@@ -57,6 +57,7 @@
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" type="text/css" href="css/index_main.less.css" class="main-less">
     <link rel="stylesheet" type="text/css" href="css/ion-fab.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 
     <!-- IMPORTANT: Do not include a weinre script tag as part of your release builds! -->
     <!-- Place your remote debugging (weinre) script URL from the Test tab here, if it does not work below -->
@@ -103,6 +104,8 @@
     <script type="application/javascript" src="js/index_uib_w_26_popup.js"></script>
     <script type="application/javascript" src="js/index_uib_w_29_popup.js"></script>
     <script type="application/javascript" src="js/index_uib_w_37_popup.js"></script>
+    <script type="application/javascript" src="js/index_uib_w_39_popup.js"></script>
+    <script type="application/javascript" src="xdk/appdesigner/js/rest-of-space.js"></script>
 </head>
 
 <body ng-app="myApp">
@@ -148,7 +151,7 @@
                     <br>
                     <button class="button widget uib_w_24 d-margins ion button-dark ion-ios7-eye-outline icon-left" data-uib="ionic/button" data-ver="0" id="btncomparar">Comparar Produtos</button>
                     <br>
-                    <button class="button widget uib_w_24 d-margins ion button-dark ion-ios7-cart icon-left" data-uib="ionic/button" data-ver="0" id="btnircomprar">Ir as Compras</button>
+                    <button class="button widget uib_w_24 d-margins ion button-dark ion-ios7-cart icon-left" data-uib="ionic/button" data-ver="0" id="btnircomprar" ng-controller="uib_w_39_popup_controller" ng-click="comprarSelMercado()">Ir as Compras</button>
                     <br>
                     <button class="button widget uib_w_24 d-margins ion button-dark ion-ios7-paper-outline icon-left" data-uib="ionic/button" data-ver="0" id="btnrelatorios">Relatórios</button>
                     <br>
@@ -158,14 +161,6 @@
                 </div>
             </div>
             <div id="sbsupermercados" class="upage-content vertical-col left hidden">
-                <div class="tarea widget uib_w_27 d-margins" data-uib="media/text" data-ver="0" name="uib_w_27" style="margin-top: 15px">
-                    <div class="widget-container left-receptacle"></div>
-                    <div class="widget-container right-receptacle"></div>
-                    <div class="text-container">
-                        <h2><sub><strong>Supermercados</strong></sub></h2>
-                    </div>
-                </div>
-
                 <div class="widget uib_w_10 scale-image d-margins" data-uib="media/img" data-ver="0">
                     <figure class="figure-align" style="text-align: center">
                         <img width="80px" height="80px" src="images/camera.png" id="imagemercado" ng-controller="uib_w_29_popup_controller" ng-click="foto()" alt="Imagem">
@@ -198,6 +193,14 @@
                 <template class="uib-ionic-popup widget uib_w_29 d-margins" data-uib="ionic/popup" data-ver="0"></template>
             </div>
             <div id="sblsupermercados" class="upage-content vertical-col hidden" style="text-align: right;">
+                <div class="tarea widget uib_w_38 d-margins" data-uib="media/text" data-ver="0" name="uib_w_38" style="text-align: center; font-size: 150%; padding-top: 25px;">
+                    <div class="widget-container left-receptacle"></div>
+                    <div class="widget-container right-receptacle"></div>
+                    <div class="text-container">
+                        <p><strong>Supermercados</strong>
+                        </p>
+                    </div>
+                </div>
                 <ion-scroll zooming="true" direction="xy">
                     <ion-list class="widget uib_w_22 d-margins" data-uib="ionic/list" data-ver="0" id="lstsupermercados">
                     </ion-list>
@@ -255,6 +258,14 @@
                 <template class="uib-ionic-popup widget uib_w_37 d-margins" data-uib="ionic/popup" data-ver="0"></template>
             </div>
             <div id="sblprodutos" class="upage-content vertical-col hidden" style="text-align: right;">
+                <div class="tarea widget uib_w_38 d-margins" data-uib="media/text" data-ver="0" name="uib_w_38" style="text-align: center; font-size: 150%; padding-top: 25px;">
+                    <div class="widget-container left-receptacle"></div>
+                    <div class="widget-container right-receptacle"></div>
+                    <div class="text-container">
+                        <p><strong>Produtos</strong>
+                        </p>
+                    </div>
+                </div>
                 <ion-scroll zooming="true" direction="xy">
                     <ion-list class="widget uib_w_22 d-margins" data-uib="ionic/list" data-ver="0" id="lstprodutos">
                     </ion-list>
@@ -262,6 +273,69 @@
                 <ion-fab id="addproduto" onclick="montarProdutos()">
                     <i class="icon ion ion-android-add" style="margin: 30px 10px 25px 0px;"></i>
                 </ion-fab>
+            </div>
+            <div id="sbcomprar-mercado" class="upage-content vertical-col left hidden">
+                <div class="tarea widget uib_w_38 d-margins" data-uib="media/text" data-ver="0" name="uib_w_38" style="text-align: center; font-size: 150%; padding-top: 25px;">
+                    <div class="widget-container left-receptacle"></div>
+                    <div class="widget-container right-receptacle"></div>
+                    <div class="text-container">
+                        <p>
+                            <img src="images/cart-red.png" width="35px" height="35px">
+                            <strong>Comprar Produtos</strong>
+                        </p>
+                    </div>
+                </div>
+                <br>
+                <br>
+
+                <template class="uib-ionic-popup widget uib_w_39 d-margins" data-uib="ionic/popup" data-ver="0"></template>
+                <label class="item item-input item-select widget uib_w_40 d-margins" data-uib="ionic/select" data-ver="0">
+                    <div class="input-label">Selecione o supermercado</div>
+                    <select id="selMercadoCompra">
+                    </select>
+                </label>
+                <br>
+                <br>
+                <div class="uib-grid widget uib_w_41 grid-text grid-height d-margins" data-uib="layout/grid" data-ver="1" style="height: 100px;">
+                    <div class="uib-grid-row">
+                        <div class="uib-grid-cell widget-container">
+                            <button class="button widget uib_w_42 d-margins ion button-assertive ion-android-arrow-up-right" data-uib="ionic/button" data-ver="0" id="btnavancar" ng-controller="uib_w_39_popup_controller" ng-click="avancar()">Avançar</button>
+                        </div>
+                        <div class="uib-grid-cell widget-container">
+                            <button class="button widget uib_w_43 d-margins ion button-assertive ion-android-system-back" data-uib="ionic/button" data-ver="0" id="btncancelarcompra">Cancelar</button>
+                        </div>
+                    </div>
+
+                    <div class="uib-grid-row">
+                        <div class="uib-grid-cell widget-container"></div>
+                        <div class="uib-grid-cell widget-container"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="sbcomprar-produtos" class="upage-content vertical-col left hidden">
+                <div class="tarea widget uib_w_38 d-margins" data-uib="media/text" data-ver="0" name="uib_w_38" style="text-align: center; font-size: 150%; padding-top: 25px;">
+                    <div class="widget-container left-receptacle"></div>
+                    <div class="widget-container right-receptacle"></div>
+                    <div class="text-container">
+                        <p>
+                            <img src="images/cart-red.png" width="35px" height="35px">
+                            <strong>Comprar Produtos</strong>
+                        </p>
+                    </div>
+                </div>
+                <br>
+                <br>
+
+                <template class="uib-ionic-popup widget uib_w_39 d-margins" data-uib="ionic/popup" data-ver="0"></template>
+                <label class="item item-input widget uib_w_40 d-margins" data-uib="ionic/select" data-ver="0">
+                    <div class="input-label" style="text-align: center">Selecione os produtos desejados</div>
+                </label>
+                <br>
+                <br>
+                <ion-scroll zooming="true" direction="xy">
+                    <ion-list class="widget uib_w_22 d-margins" data-uib="ionic/list" data-ver="0" id="lstprodutoscompra">
+                    </ion-list>
+                </ion-scroll>
             </div>
         </div>
     </div>
