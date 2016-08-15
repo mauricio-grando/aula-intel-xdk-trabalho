@@ -336,6 +336,33 @@
                     <ion-list class="widget uib_w_22 d-margins" data-uib="ionic/list" data-ver="0" id="lstprodutoscompra">
                     </ion-list>
                 </ion-scroll>
+                <div class="uib-grid widget uib_w_41 grid-text grid-height d-margins" data-uib="layout/grid" data-ver="1" style="height: 100px;">
+                    <div class="uib-grid-row">
+                        <div class="uib-grid-cell widget-container">
+                            <button class="button widget uib_w_42 d-margins ion button-assertive ion-android-arrow-up-right" data-uib="ionic/button" data-ver="0" id="btnavancar" ng-controller="uib_w_39_popup_controller" ng-click="calcularTotal()">Avançar</button>
+                        </div>
+                        <div class="uib-grid-cell widget-container">
+                            <button class="button widget uib_w_43 d-margins ion button-assertive ion-android-system-back" data-uib="ionic/button" data-ver="0" id="btncancelarcompra">Cancelar</button>
+                        </div>
+                    </div>
+
+                    <div class="uib-grid-row">
+                        <div class="uib-grid-cell widget-container"></div>
+                        <div class="uib-grid-cell widget-container"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="sbcomprar-total" class="upage-content vertical-col left hidden">
+                <div class="tarea widget uib_w_38 d-margins" data-uib="media/text" data-ver="0" name="uib_w_38" style="text-align: center; font-size: 150%; padding-top: 25px;">
+                    <div class="widget-container left-receptacle"></div>
+                    <div class="widget-container right-receptacle"></div>
+                    <div class="text-container">
+                        <p><strong>Valor total da compra</strong>
+                        </p>
+                    </div>
+
+                    <div id="valortotal"></div>
+                </div>
             </div>
         </div>
     </div>

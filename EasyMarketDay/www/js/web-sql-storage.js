@@ -48,12 +48,12 @@ var WebSqlDB = function (successCallback, errorCallback) {
             " create table if not exists compras ( " +
             "     codcomp integer primary key autoincrement not null, " +
             "     codmer integer not null, " +
-            "     datcomp datetime, " +
-            "     codlistaprod integer not null " +
+            "     total real not null, " +
+            "     datcomp datetime " +
             " ); ";
         var sqlComprasProdutos =
             " create table if not exists compras_produtos ( " +
-            "     codlistaprod integer primary key autoincrement not null, " +
+            "     codcomp integer not null, " +
             "     codprod integer not null, " +
             "     quantprod integer not null, " +
             "     precoprod real not null, " +
@@ -210,7 +210,10 @@ var WebSqlDB = function (successCallback, errorCallback) {
     this.findSuperMercadosAll = function (callback) {
         this.db.transaction(
             function (tx) {
-                var sql = "SELECT * FROM super_mercado WHERE ativo = 1 ORDER BY nomemercado ASC";
+				// var sql = "select * FROM super_mercado WHERE codmer IN (SELECT codmer FROM produto WHERE ativo = 1) and ativo = 1 ORDER BY nomemercado ASC";
+                var sql = "SELECT * FROM super_mercado s WHERE exists " +
+                          "(SELECT * FROM produto p WHERE p.codmer = s.codmer AND p.ativo = 1) " +
+                          "AND s.ativo = 1 ORDER BY s.nomemercado ASC";
                 tx.executeSql(sql, [], function (tx, results) {
                     var len = results.rows.length,
                         supermercados = [],
@@ -258,6 +261,28 @@ var WebSqlDB = function (successCallback, errorCallback) {
 				tx.executeSql(sql, [codprod], function (tx, results) {
                     // This callback returns the first results.rows.item if rows.length is 1 or return null
                     callback(results.rows.length === 1 ? results.rows.item(0) : null);
+                });
+            },
+            function (tx, error) {
+                alert("findProdutoById Error: " + error.message);
+            }
+        );
+    };
+
+    this.findProdutosByIds = function (codprods, callback) {
+        this.db.transaction(
+            function (tx) {
+                var sql = codprods + ";";
+                tx.executeSql(sql, null, function (tx, results) {
+                     var len = results.rows.length,
+                        produtosdacompra = [],
+                        i = 0;
+                    for (; i < len; i++) {
+                        produtosdacompra[i] = results.rows.item(i);
+                    }
+
+                    // Passes a array with values back to calling function
+                    callback(produtosdacompra);
                 });
             },
             function (tx, error) {
@@ -430,8 +455,8 @@ var WebSqlDB = function (successCallback, errorCallback) {
         var parsedJson = JSON.parse(json);
         this.db.transaction(
             function (tx) {
-                var sql = "INSERT INTO codprod (codprod, quantprod, precoprod, totalprod) VALUES (?, ?, ?, ?)";
-                tx.executeSql(sql, [parsedJson.codprod, parsedJson.quantprod, parsedJson.precoprod, parsedJson.totalprod], function (tx, result) {
+                var sql = "INSERT INTO compras_produtos (codcomp, codprod, quantprod, precoprod, totalprod) VALUES (?, ?, ?, ?, ?)";
+                tx.executeSql(sql, [parsedJson.codcomp, parsedJson.codprod, parsedJson.quantprod, parsedJson.precoprod, parsedJson.totalprod], function (tx, result) {
                     // If results rows
                     callback(result);
                 });
@@ -444,8 +469,8 @@ var WebSqlDB = function (successCallback, errorCallback) {
         var parsedJson = JSON.parse(json);
         this.db.transaction(
             function (tx) {
-                var sql = "INSERT INTO compras (codmer, datcomp, codlistaprod) VALUES (?, ?, ?)";
-                tx.executeSql(sql, [parsedJson.codmer, parsedJson.datcomp, parsedJson.codlistaprod], function (tx, result) {
+                var sql = "INSERT INTO compras (codmer, datcomp, total) VALUES (?, ?, ?)";
+                tx.executeSql(sql, [parsedJson.codmer, parsedJson.datcomp, parsedJson.total], function (tx, result) {
                     // If results rows
                     callback(result.rowsAffected === 1 ? true : false);
                 });
