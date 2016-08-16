@@ -296,19 +296,14 @@
                 </label>
                 <br>
                 <br>
-                <div class="uib-grid widget uib_w_41 grid-text grid-height d-margins" data-uib="layout/grid" data-ver="1" style="height: 100px;">
+                <div class="uib-grid widget uib_w_41 grid-text grid-height d-margins" data-uib="layout/grid" data-ver="1" style="height: 60px;">
                     <div class="uib-grid-row">
                         <div class="uib-grid-cell widget-container">
                             <button class="button widget uib_w_42 d-margins ion button-assertive ion-android-arrow-up-right" data-uib="ionic/button" data-ver="0" id="btnavancar" ng-controller="uib_w_39_popup_controller" ng-click="avancar()">Avançar</button>
                         </div>
                         <div class="uib-grid-cell widget-container">
-                            <button class="button widget uib_w_43 d-margins ion button-assertive ion-android-system-back" data-uib="ionic/button" data-ver="0" id="btncancelarcompra">Cancelar</button>
+                            <button class="button widget uib_w_43 d-margins ion button-assertive ion-android-system-back" data-uib="ionic/button" data-ver="0" id="btncancelarcompra" ng-controller="uib_w_39_popup_controller" ng-click="cancelar()">Cancelar</button>
                         </div>
-                    </div>
-
-                    <div class="uib-grid-row">
-                        <div class="uib-grid-cell widget-container"></div>
-                        <div class="uib-grid-cell widget-container"></div>
                     </div>
                 </div>
             </div>
@@ -336,19 +331,14 @@
                     <ion-list class="widget uib_w_22 d-margins" data-uib="ionic/list" data-ver="0" id="lstprodutoscompra">
                     </ion-list>
                 </ion-scroll>
-                <div class="uib-grid widget uib_w_41 grid-text grid-height d-margins" data-uib="layout/grid" data-ver="1" style="height: 100px;">
+                <div class="uib-grid widget uib_w_41 grid-text grid-height d-margins" data-uib="layout/grid" data-ver="1" style="height: 60px;">
                     <div class="uib-grid-row">
                         <div class="uib-grid-cell widget-container">
                             <button class="button widget uib_w_42 d-margins ion button-assertive ion-android-arrow-up-right" data-uib="ionic/button" data-ver="0" id="btnavancar" ng-controller="uib_w_39_popup_controller" ng-click="calcularTotal()">Avançar</button>
                         </div>
                         <div class="uib-grid-cell widget-container">
-                            <button class="button widget uib_w_43 d-margins ion button-assertive ion-android-system-back" data-uib="ionic/button" data-ver="0" id="btncancelarcompra">Cancelar</button>
+                            <button class="button widget uib_w_43 d-margins ion button-assertive ion-android-system-back" data-uib="ionic/button" data-ver="0" id="btncancelarcompra" ng-controller="uib_w_39_popup_controller" ng-click="cancelar()">Cancelar</button>
                         </div>
-                    </div>
-
-                    <div class="uib-grid-row">
-                        <div class="uib-grid-cell widget-container"></div>
-                        <div class="uib-grid-cell widget-container"></div>
                     </div>
                 </div>
             </div>
@@ -361,7 +351,36 @@
                         </p>
                     </div>
 
-                    <div id="valortotal"></div>
+                    <div style="margin-top: 50px; text-align: center;">
+                        <div id="qtdprodutos"></div>
+                        <br>
+                        <div id="valortotal"></div>
+                    </div>
+                </div>
+                <div class="uib-grid widget uib_w_44 grid-text grid-height d-margins" data-uib="layout/grid" data-ver="1" style="height: 60px;">
+                    <div class="uib-grid-row">
+                        <div class="uib-grid-cell widget-container">
+                            <button class="button widget uib_w_42 d-margins ion button-assertive ion-android-arrow-up-right icon-left" data-uib="ionic/button" data-ver="0" id="btnconcluir" ng-controller="uib_w_39_popup_controller" ng-click="finalizar()">Concluir</button>
+                        </div>
+                        <div class="uib-grid-cell widget-container">
+                            <button class="button widget uib_w_43 d-margins ion button-assertive ion-android-system-back icon-left" data-uib="ionic/button" data-ver="0" id="btncancelarcompra" ng-controller="uib_w_39_popup_controller" ng-click="cancelar()">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="compra-sucesso" class="upage-content vertical-col left hidden">
+                <div class="tarea widget uib_w_45 d-margins" data-uib="media/text" data-ver="0" name="uib_w_45">
+                    <div class="widget-container left-receptacle"></div>
+                    <div class="widget-container right-receptacle"></div>
+                    <div class="text-container">
+                        <p>Obrigado por comprar em nosso aplicativo.</p>
+
+                        <p>Informamos que seu pedido já foi encaminhado ao supermercado selecionado durante a compra.</p>
+
+                        <p>Agora você só precisa passar no supermercado para fazer o pagamento e a retirada dos itens.</p>
+
+                        <p><strong>Esperamos sempre tê-lo conosco ;)</strong></p>
+                    </div>
                 </div>
             </div>
         </div>

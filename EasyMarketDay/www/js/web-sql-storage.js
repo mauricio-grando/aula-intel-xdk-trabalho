@@ -472,7 +472,8 @@ var WebSqlDB = function (successCallback, errorCallback) {
                 var sql = "INSERT INTO compras (codmer, datcomp, total) VALUES (?, ?, ?)";
                 tx.executeSql(sql, [parsedJson.codmer, parsedJson.datcomp, parsedJson.total], function (tx, result) {
                     // If results rows
-                    callback(result.rowsAffected === 1 ? true : false);
+                    alert(result);
+                    callback(result);
                 });
             }
         );

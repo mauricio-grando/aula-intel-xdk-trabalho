@@ -1,5 +1,9 @@
 function uib_w_39_popup_controller($scope, $ionicPopup) {
 
+    var sql = null;
+    var mercado = null;
+    var totalCompra = null;
+
     $scope.comprarSelMercado = function () {
         $("#sbmenu").hide();
 
@@ -25,7 +29,7 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
             );
 
         } else {
-            var mercado = $("#selMercadoCompra").val();
+            mercado = $("#selMercadoCompra").val();
 
             db.findProdutosBySuperMercado(mercado, function (produtos) {
                 $("#lstprodutoscompra").html("");
@@ -59,8 +63,8 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
     };
 
     $scope.calcularTotal = function () {
-        var sql = "SELECT * FROM produto WHERE codprod = ";
-        var total = 0;
+        sql = "SELECT * FROM produto WHERE codprod = ";
+        totalCompra = 0;
 
         // query dinâmica pois o SELECT IN não funcionou
         var count = 0;
@@ -83,29 +87,22 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
             );
 
         } else {
-
+            var qtdProdutos = 0;
             db.findProdutosByIds(sql, function (produtosdacompra) {
-                    for (var i = 0; i < produtosdacompra.length; i++) {
-                        var qtd = $("#qtd_" + produtosdacompra[i].codprod).val();
-                        total += parseFloat(produtosdacompra[i].preco) * qtd;
-                    }
+                for (var i = 0; i < produtosdacompra.length; i++) {
+                    var qtd = $("#qtd_" + produtosdacompra[i].codprod).val();
+                    totalCompra += parseFloat(produtosdacompra[i].preco) * qtd;
+                }
 
-                    //$("#valortotal").maskMoney();
+                $("#qtdprodutos").html("Você adicionou " + produtosdacompra.length + " produtos à sua compra.");
 
-                    var texto = total.toLocaleString("pt-BR", {
-                        style: "currency"
-                    });
-
-                    alert('texto');
-
-                    $("#valortotal").html($scope.formatar(total.toFixed(2));
-
-                    });
-
+                totalCompra = $scope.formatar(totalCompra.toFixed(2));
+                $("#valortotal").html("O total do seu pedido é R$ " + totalCompra);
                 activate_subpage("#sbcomprar-total");
 
+                return false;
             });
-        return false;
+        }
     };
 
     $scope.formatar = function (valor) {
@@ -116,4 +113,52 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
         return valor;
     };
 
-};
+    $scope.finalizar = function () {
+        var data = new Date().toLocaleDateString();
+
+        // insere a compra primeiro para pegar o id gerado
+        db.insertCompra(JSON.stringify({
+            "codmer": mercado,
+            "datcompra": data,
+            "total": totalCompra
+
+        }), function (result) {
+
+            alert('inserido ' + result);
+
+            var status = result.rowsAffected === 1 ? true : false;
+            if (status === true) {
+                // pega o id inserido da compra
+                var codComp = result.insertId;
+
+                // pega todos os produtos selecionados e insere cada um
+                db.findProdutosByIds($scope.sql, function (produtosdacompra) {
+
+                    for (var i = 0; i < produtosdacompra.length; i++) {
+                        var qtd = $("#qtd_" + produtosdacompra[i].codprod).val();
+                        total += parseFloat(produtosdacompra[i].preco) * qtd;
+
+                        db.insertComprasProdutos(JSON.stringify({
+                            "codcomp": codComp,
+                            "codprod": produtosdacompra[i].codprod,
+                            "quantprod": qtd,
+                            "precoprod": produtosdacompra[i].preco,
+                            "totalprod": total
+
+                        }), function (result) {
+
+                            var status = result.rowsAffected === 1 ? true : false;
+                            if (status === true) {
+                                alert(inseriu);
+                            }
+                        });
+                    }
+                });
+            }
+
+            activate_page("#compra-sucesso");
+            return false;
+        });
+
+    };
+}
