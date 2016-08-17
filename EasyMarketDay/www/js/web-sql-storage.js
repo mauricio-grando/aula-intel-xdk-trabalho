@@ -30,7 +30,7 @@ var WebSqlDB = function (successCallback, errorCallback) {
             " create table if not exists super_mercado ( " +
             "     codmer integer primary key autoincrement not null, " +
             "     nomemercado varchar(60) not null, " +
-			"     fotmer text not null, " +
+            "     fotmer text not null, " +
             "     ativo integer not null " +
             " ) ";
         var sqlProduto =
@@ -51,7 +51,7 @@ var WebSqlDB = function (successCallback, errorCallback) {
             "     total real not null, " +
             "     datcomp datetime " +
             " ); ";
-        var sqlComprasProdutos =
+       var sqlComprasProdutos =
             " create table if not exists compras_produtos ( " +
             "     codcomp integer not null, " +
             "     codprod integer not null, " +
@@ -59,7 +59,7 @@ var WebSqlDB = function (successCallback, errorCallback) {
             "     precoprod real not null, " +
             "     totalprod real not null " +
             " ); ";
-		var sqlCategoriaProduto =
+        var sqlCategoriaProduto =
             " create table if not exists categorias_produto ( " +
             "     codcat integer primary key autoincrement not null, " +
             "     nomecat integer not null " +
@@ -93,7 +93,7 @@ var WebSqlDB = function (successCallback, errorCallback) {
             function (tx, error) {
                 alert('Create table compras_produtos error: ' + error.message);
             });
-		tx.executeSql(sqlCategoriaProduto, null,
+        tx.executeSql(sqlCategoriaProduto, null,
             function () {
                 console.log('CategoriaProduto -> DB Tables created succesfully');
             },
@@ -101,74 +101,74 @@ var WebSqlDB = function (successCallback, errorCallback) {
                 alert('Create table categorias_produto error: ' + error.message);
             });
     };
-	
-	this.addSampleData = function (tx) {
-		// Array of objects
+
+    this.addSampleData = function (tx) {
+        // Array of objects
         var categorias = [
-			{
+            {
                 "codcat": 1,
                 "nomecat": "Frios"
             },
-			{
+            {
                 "codcat": 2,
                 "nomecat": "Bebidas"
             },
-			{
+            {
                 "codcat": 3,
                 "nomecat": "Hortifruti"
             },
-			{
+            {
                 "codcat": 4,
                 "nomecat": "Grãos"
             },
-			{
+            {
                 "codcat": 5,
                 "nomecat": "Limpeza"
             },
-			{
+            {
                 "codcat": 6,
                 "nomecat": "Doces"
             },
-			{
+            {
                 "codcat": 7,
                 "nomecat": "Carnes"
             },
-			{
+            {
                 "codcat": 8,
                 "nomecat": "Embutidos"
             },
-			{
+            {
                 "codcat": 9,
                 "nomecat": "Padaria"
             },
-			{
+            {
                 "codcat": 10,
                 "nomecat": "Utensílios de Cozinha"
             },
-			{
+            {
                 "codcat": 11,
                 "nomecat": "Talheres"
             },
-			{
+            {
                 "codcat": 12,
                 "nomecat": "Toalhas"
             },
-			{
+            {
                 "codcat": 12,
                 "nomecat": "Caseiros"
             },
-			{
+            {
                 "codcat": 13,
                 "nomecat": "Biscoitos"
-            }			
+            }
 		];
-		
-		var cat = categorias.length;
+
+        var cat = categorias.length;
 
         var sqlT = "INSERT OR REPLACE INTO categorias_produto " +
             " (codcat, nomecat) VALUES (?, ?)";
-			
-		var c;
+
+        var c;
 
         // Loop through sample data array and insert into db
         for (var i = 0; i < cat; i++) {
@@ -181,14 +181,14 @@ var WebSqlDB = function (successCallback, errorCallback) {
                     alert('INSERT error: ' + error.message);
                 });
         }
-	 };
+    };
 
     this.findProdutosBySuperMercado = function (codmer, callback) {
         this.db.transaction(
             function (tx) {
                 var sql = "SELECT p.codprod as codprod, p.nomeprod as nomeprod, p.descprod as descricaoprod, p.fotprod as fotprod, p.preco as preco, m.nomemercado as nomemercado, c.nomecat as nomecat, m.codmer as codmer, c.codcat as codcat " +
-				" FROM produto p INNER JOIN super_mercado m INNER JOIN categorias_produto c " +
-				" WHERE p.codmer = ? AND p.catprod = c.codcat AND p.codmer = m.codmer AND p.ativo = 1 ORDER BY p.nomeprod ASC;";
+                    " FROM produto p INNER JOIN super_mercado m INNER JOIN categorias_produto c " +
+                    " WHERE p.codmer = ? AND p.catprod = c.codcat AND p.codmer = m.codmer AND p.ativo = 1 ORDER BY p.nomeprod ASC;";
                 tx.executeSql(sql, [codmer], function (tx, results) {
                     var len = results.rows.length,
                         produtos = [],
@@ -210,10 +210,10 @@ var WebSqlDB = function (successCallback, errorCallback) {
     this.findSuperMercadosAll = function (callback) {
         this.db.transaction(
             function (tx) {
-				// var sql = "select * FROM super_mercado WHERE codmer IN (SELECT codmer FROM produto WHERE ativo = 1) and ativo = 1 ORDER BY nomemercado ASC";
+                // var sql = "select * FROM super_mercado WHERE codmer IN (SELECT codmer FROM produto WHERE ativo = 1) and ativo = 1 ORDER BY nomemercado ASC";
                 var sql = "SELECT * FROM super_mercado s WHERE exists " +
-                          "(SELECT * FROM produto p WHERE p.codmer = s.codmer AND p.ativo = 1) " +
-                          "AND s.ativo = 1 ORDER BY s.nomemercado ASC";
+                    "(SELECT * FROM produto p WHERE p.codmer = s.codmer AND p.ativo = 1) " +
+                    "AND s.ativo = 1 ORDER BY s.nomemercado ASC";
                 tx.executeSql(sql, [], function (tx, results) {
                     var len = results.rows.length,
                         supermercados = [],
@@ -231,8 +231,8 @@ var WebSqlDB = function (successCallback, errorCallback) {
             }
         );
     };
-	
-	this.findCategoriasAll = function (callback) {
+
+    this.findCategoriasAll = function (callback) {
         this.db.transaction(
             function (tx) {
                 var sql = "SELECT * FROM categorias_produto ORDER BY nomecat ASC";
@@ -253,12 +253,12 @@ var WebSqlDB = function (successCallback, errorCallback) {
             }
         );
     };
-	
-	this.findProdutoById = function (codprod, callback) {
+
+    this.findProdutoById = function (codprod, callback) {
         this.db.transaction(
             function (tx) {
                 var sql = "SELECT * FROM produto WHERE codprod = ?";
-				tx.executeSql(sql, [codprod], function (tx, results) {
+                tx.executeSql(sql, [codprod], function (tx, results) {
                     // This callback returns the first results.rows.item if rows.length is 1 or return null
                     callback(results.rows.length === 1 ? results.rows.item(0) : null);
                 });
@@ -274,7 +274,7 @@ var WebSqlDB = function (successCallback, errorCallback) {
             function (tx) {
                 var sql = codprods + ";";
                 tx.executeSql(sql, null, function (tx, results) {
-                     var len = results.rows.length,
+                    var len = results.rows.length,
                         produtosdacompra = [],
                         i = 0;
                     for (; i < len; i++) {
@@ -290,13 +290,13 @@ var WebSqlDB = function (successCallback, errorCallback) {
             }
         );
     };
-	
-	this.findProdutosAll = function (callback) {
+
+    this.findProdutosAll = function (callback) {
         this.db.transaction(
             function (tx) {
                 var sql = "SELECT p.codprod as codprod, p.nomeprod as nomeprod, p.descprod as descricaoprod, p.fotprod as fotprod, p.preco as preco, m.nomemercado as nomemercado, c.nomecat as nomecat, m.codmer as codmer, c.codcat as codcat " +
-				" FROM produto p INNER JOIN super_mercado m INNER JOIN categorias_produto c " +
-				" WHERE p.catprod = c.codcat AND p.codmer = m.codmer AND p.ativo = 1 ORDER BY p.nomeprod ASC;";
+                    " FROM produto p INNER JOIN super_mercado m INNER JOIN categorias_produto c " +
+                    " WHERE p.catprod = c.codcat AND p.codmer = m.codmer AND p.ativo = 1 ORDER BY p.nomeprod ASC;";
                 tx.executeSql(sql, [], function (tx, results) {
                     var len = results.rows.length,
                         produtos = [],
@@ -368,10 +368,10 @@ var WebSqlDB = function (successCallback, errorCallback) {
         this.db.transaction(
             function (tx) {
                 var sql = "INSERT INTO super_mercado (nomemercado, fotmer, ativo) VALUES (?, ?, ?)";
-				alert(parsedJson.fotmer);
+                alert(parsedJson.fotmer);
                 tx.executeSql(sql, [parsedJson.nomemercado, parsedJson.fotmer, parsedJson.ativo], function (tx, result) {
                     // If results rows
-					alert(result.message);
+                    alert(result.message);
                     callback(result.rowsAffected === 1 ? true : false);
                 });
             }
@@ -415,7 +415,7 @@ var WebSqlDB = function (successCallback, errorCallback) {
                 tx.executeSql(sql, [parsedJson.nomeprod, parsedJson.descprod, parsedJson.fotprod, parsedJson.codmer, parsedJson.preco, parsedJson.catprod], function (tx, result) {
                     // If results rows
                     // callback(result.rowsAffected === 1 ? true : false);
-					callback(result);
+                    callback(result);
                 });
             }
         );
@@ -455,11 +455,14 @@ var WebSqlDB = function (successCallback, errorCallback) {
         var parsedJson = JSON.parse(json);
         this.db.transaction(
             function (tx) {
-                var sql = "INSERT INTO compras_produtos (codcomp, codprod, quantprod, precoprod, totalprod) VALUES (?, ?, ?, ?, ?)";
-                tx.executeSql(sql, [parsedJson.codcomp, parsedJson.codprod, parsedJson.quantprod, parsedJson.precoprod, parsedJson.totalprod], function (tx, result) {
+                var sql = "INSERT INTO compras_produtos (codcomp, codprod, quantprod, precoprod, totalprod) VALUES (?, ?, ?, ?, ?);";
+                tx.executeSql(sql, [parsedJson.codcomp, parsedJson.codprod, parsedJson.qtdprod, parsedJson.precoprod, parsedJson.totalprod], function (tx, result) {
                     // If results rows
                     callback(result);
                 });
+            },
+            function (tx, error) {
+                alert("insertComprasProdutos Error: " + error);
             }
         );
     };
@@ -472,7 +475,6 @@ var WebSqlDB = function (successCallback, errorCallback) {
                 var sql = "INSERT INTO compras (codmer, datcomp, total) VALUES (?, ?, ?)";
                 tx.executeSql(sql, [parsedJson.codmer, parsedJson.datcomp, parsedJson.total], function (tx, result) {
                     // If results rows
-                    alert(result);
                     callback(result);
                 });
             }

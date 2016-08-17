@@ -1,9 +1,5 @@
 function uib_w_39_popup_controller($scope, $ionicPopup) {
 
-    var sql = null;
-    var mercado = null;
-    var totalCompra = null;
-
     $scope.comprarSelMercado = function () {
         $("#sbmenu").hide();
 
@@ -29,7 +25,9 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
             );
 
         } else {
-            mercado = $("#selMercadoCompra").val();
+            var mercado = $("#selMercadoCompra").val();
+
+            $("#mercadoSelecionado").val(mercado);
 
             db.findProdutosBySuperMercado(mercado, function (produtos) {
                 $("#lstprodutoscompra").html("");
@@ -42,7 +40,7 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
                     $("#lstprodutoscompra").prepend(
                         '<ion-item id="' + produtos[i].codprod + '" class="item widget uib_w_6 item-button-right" data-uib="ionic/list_item" data-ver="0"> ' +
                         '<div style="float: left"><img src="' + foto + '" height="50" width="50"> ' +
-                        produtos[i].nomeprod + ' - ' + produtos[i].nomecat + '</div>' +
+                        produtos[i].nomeprod + ' - ' + produtos[i].nomecat + ' - R$' + produtos[i].preco + ' </div>' +
                         '<label class="checkbox" style="float: right;"> ' +
                         '<input type="checkbox" name="produto-compra" value="' + produtos[i].codprod + '">Adicionar</label> ' +
                         '<label class="item item-input d-margins" style="float: right;"> ' +
@@ -63,8 +61,8 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
     };
 
     $scope.calcularTotal = function () {
-        sql = "SELECT * FROM produto WHERE codprod = ";
-        totalCompra = 0;
+        var totalCompra = 0;
+        var sql = "SELECT * FROM produto WHERE codprod = ";
 
         // query dinâmica pois o SELECT IN não funcionou
         var count = 0;
@@ -77,6 +75,8 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
                 sql = sql.concat(' OR codprod = ' + $(this).val());
             }
         });
+
+        $("#sql").val(sql);
 
         if (count === 0) {
             navigator.notification.alert(
@@ -91,13 +91,17 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
             db.findProdutosByIds(sql, function (produtosdacompra) {
                 for (var i = 0; i < produtosdacompra.length; i++) {
                     var qtd = $("#qtd_" + produtosdacompra[i].codprod).val();
-                    totalCompra += parseFloat(produtosdacompra[i].preco) * qtd;
+                    var preco = produtosdacompra[i].preco.replace(',', '.');
+
+                    totalCompra += parseFloat(preco) * qtd;
                 }
 
                 $("#qtdprodutos").html("Você adicionou " + produtosdacompra.length + " produtos à sua compra.");
 
-                totalCompra = $scope.formatar(totalCompra.toFixed(2));
+                totalCompra = $scope.formatar(totalCompra);
                 $("#valortotal").html("O total do seu pedido é R$ " + totalCompra);
+                $("#valorTotalProdutos").val(totalCompra);
+
                 activate_subpage("#sbcomprar-total");
 
                 return false;
@@ -115,16 +119,15 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
 
     $scope.finalizar = function () {
         var data = new Date().toLocaleDateString();
+        var sql = $("#sql").val();
 
         // insere a compra primeiro para pegar o id gerado
         db.insertCompra(JSON.stringify({
-            "codmer": mercado,
-            "datcompra": data,
-            "total": totalCompra
+            "codmer": $("#mercadoSelecionado").val(),
+            "datcomp": data,
+            "total": $("#valorTotalProdutos").val()
 
         }), function (result) {
-
-            alert('inserido ' + result);
 
             var status = result.rowsAffected === 1 ? true : false;
             if (status === true) {
@@ -132,31 +135,30 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
                 var codComp = result.insertId;
 
                 // pega todos os produtos selecionados e insere cada um
-                db.findProdutosByIds($scope.sql, function (produtosdacompra) {
+                db.findProdutosByIds(sql, function (produtosdacompra) {
 
                     for (var i = 0; i < produtosdacompra.length; i++) {
+
                         var qtd = $("#qtd_" + produtosdacompra[i].codprod).val();
-                        total += parseFloat(produtosdacompra[i].preco) * qtd;
+                        var preco = produtosdacompra[i].preco.replace(',', '.');
+
+                        var total = preco * qtd;
 
                         db.insertComprasProdutos(JSON.stringify({
                             "codcomp": codComp,
                             "codprod": produtosdacompra[i].codprod,
-                            "quantprod": qtd,
+                            "qtdprod": qtd,
                             "precoprod": produtosdacompra[i].preco,
                             "totalprod": total
 
                         }), function (result) {
 
-                            var status = result.rowsAffected === 1 ? true : false;
-                            if (status === true) {
-                                alert(inseriu);
-                            }
                         });
                     }
                 });
             }
 
-            activate_page("#compra-sucesso");
+            activate_subpage("#sbcompra-sucesso");
             return false;
         });
 
