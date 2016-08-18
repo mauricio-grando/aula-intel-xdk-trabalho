@@ -3,6 +3,7 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
     $scope.comprarSelMercado = function () {
         $("#sbmenu").hide();
 
+        $("#selMercadoCompra").html("");
         db.findSuperMercadosComProdutos(function (supermercados) {
             for (var i = 0; i < supermercados.length; i++) {
                 // adicionando os itens na lista
