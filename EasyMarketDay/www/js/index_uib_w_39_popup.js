@@ -3,7 +3,7 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
     $scope.comprarSelMercado = function () {
         $("#sbmenu").hide();
 
-        db.findSuperMercadosAll(function (supermercados) {
+        db.findSuperMercadosComProdutos(function (supermercados) {
             for (var i = 0; i < supermercados.length; i++) {
                 // adicionando os itens na lista
                 $("#selMercadoCompra").append(
@@ -90,8 +90,9 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
             var qtdProdutos = 0;
             db.findProdutosByIds(sql, function (produtosdacompra) {
                 for (var i = 0; i < produtosdacompra.length; i++) {
+
+                    var preco = Number(produtosdacompra[i].preco);
                     var qtd = $("#qtd_" + produtosdacompra[i].codprod).val();
-                    var preco = produtosdacompra[i].preco.replace(',', '.');
 
                     totalCompra += parseFloat(preco) * qtd;
                 }
@@ -140,9 +141,9 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
                     for (var i = 0; i < produtosdacompra.length; i++) {
 
                         var qtd = $("#qtd_" + produtosdacompra[i].codprod).val();
-                        var preco = produtosdacompra[i].preco.replace(',', '.');
+                        var preco = Number(produtosdacompra[i].preco);;
 
-                        var total = preco * qtd;
+                        var total = parseFloat(preco) * qtd;
 
                         db.insertComprasProdutos(JSON.stringify({
                             "codcomp": codComp,

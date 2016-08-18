@@ -6,7 +6,7 @@ var WebSqlDB = function (successCallback, errorCallback) {
         var self = this;
 
         // Open/create the database
-        this.db = window.openDatabase("easymarketday", "1.0", "EasyMarketDay DB", 4 * 1024 * 1024);
+        this.db = window.openDatabase("easymarketday_1.0", "2.0", "EasyMarketDay DB", 4 * 1024 * 1024);
 
         // WebSQL databases are tranaction based so all db querying must be done within a transaction
         this.db.transaction(
@@ -44,6 +44,7 @@ var WebSqlDB = function (successCallback, errorCallback) {
             "     catprod varchar(50) not null, " +
             "     ativo integer not null " +
             " ) ";
+
         var sqlCompras =
             " create table if not exists compras ( " +
             "     codcomp integer primary key autoincrement not null, " +
@@ -51,7 +52,7 @@ var WebSqlDB = function (successCallback, errorCallback) {
             "     total real not null, " +
             "     datcomp datetime " +
             " ); ";
-       var sqlComprasProdutos =
+        var sqlComprasProdutos =
             " create table if not exists compras_produtos ( " +
             "     codcomp integer not null, " +
             "     codprod integer not null, " +
@@ -163,17 +164,97 @@ var WebSqlDB = function (successCallback, errorCallback) {
             }
 		];
 
+        var mercados = [
+            {
+                "codmer": 1,
+                "nomemercado": "Master Sonda",
+                "ativo": 1
+            },
+            {
+                "codmer": 2,
+                "nomemercado": "Mercado Conci",
+                "ativo": 1
+            },
+            {
+                "codmer": 3,
+                "nomemercado": "Vaccaro Supermercado",
+                "ativo": 1
+            }
+        ];
+
+        var produtos = [
+            {
+                "codprod": 1,
+                "nomeprod": "Arroz Integral Tio João",
+                "descprod": "Fácil preparo e boa qualidade.",
+                "codmer": 2,
+                "preco": 7.99,
+                "catprod": 4,
+                "ativo": 1
+            },
+            {
+                "codprod": 2,
+                "nomeprod": "Leite Desnatado",
+                "descprod": "O melhor para o seu dia a dia.",
+                "codmer": 1,
+                "preco": 3.99,
+                "catprod": 2,
+                "ativo": 1
+            },
+            {
+                "codprod": 3,
+                "nomeprod": "Compota de Pêssego",
+                "descprod": "Sobremesa do churrasco.",
+                "codmer": 2,
+                "preco": 5.49,
+                "catprod": 6,
+                "ativo": 1
+            }
+        ];
+
         var cat = categorias.length;
+        var mer = mercados.length;
+        var prod = produtos.length;
 
         var sqlT = "INSERT OR REPLACE INTO categorias_produto " +
             " (codcat, nomecat) VALUES (?, ?)";
+        var sqlM = "INSERT OR REPLACE INTO super_mercado " +
+            " (codmer, nomemercado, fotmer, ativo) VALUES (?, ?, ?, ?)";
+        var sqlP = "INSERT OR REPLACE INTO produto " +
+            " (codprod, nomeprod, descprod, fotprod, codmer, preco, catprod, ativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         var c;
+        var m;
+        var prod;
 
         // Loop through sample data array and insert into db
         for (var i = 0; i < cat; i++) {
             c = categorias[i];
             tx.executeSql(sqlT, [c.codcat, c.nomecat],
+                function () { // Success callback
+                    console.log('DEBUG - 4. Sample data DB insert success');
+                },
+                function (tx, error) { // Error callback
+                    alert('INSERT error: ' + error.message);
+                });
+        }
+
+        // Loop through sample data array and insert into db
+        for (var i = 0; i < prod; i++) {
+            p = produtos[i];
+            tx.executeSql(sqlP, [p.codprod, p.nomeprod, p.descprod, p.fotprod, p.codmer, p.preco, p.catprod, p.ativo],
+                function () { // Success callback
+                    console.log('DEBUG - 4. Sample data DB insert success');
+                },
+                function (tx, error) { // Error callback
+                    alert('INSERT error: ' + error.message);
+                });
+        }
+
+        // Loop through sample data array and insert into db
+        for (var i = 0; i < mer; i++) {
+            m = mercados[i];
+            tx.executeSql(sqlM, [m.codmer, m.nomemercado, m.fotmer, m.ativo],
                 function () { // Success callback
                     console.log('DEBUG - 4. Sample data DB insert success');
                 },
@@ -208,6 +289,29 @@ var WebSqlDB = function (successCallback, errorCallback) {
     };
 
     this.findSuperMercadosAll = function (callback) {
+        this.db.transaction(
+            function (tx) {
+                // var sql = "select * FROM super_mercado WHERE codmer IN (SELECT codmer FROM produto WHERE ativo = 1) and ativo = 1 ORDER BY nomemercado ASC";
+                var sql = "SELECT * FROM super_mercado WHERE ativo = 1 ORDER BY nomemercado ASC";
+                tx.executeSql(sql, [], function (tx, results) {
+                    var len = results.rows.length,
+                        supermercados = [],
+                        i = 0;
+                    for (; i < len; i++) {
+                        supermercados[i] = results.rows.item(i);
+                    }
+
+                    // Passes a array with values back to calling function
+                    callback(supermercados);
+                });
+            },
+            function (tx, error) {
+                alert("findSuperMercadosAll Error: " + error.message);
+            }
+        );
+    };
+
+    this.findSuperMercadosComProdutos = function (callback) {
         this.db.transaction(
             function (tx) {
                 // var sql = "select * FROM super_mercado WHERE codmer IN (SELECT codmer FROM produto WHERE ativo = 1) and ativo = 1 ORDER BY nomemercado ASC";
@@ -368,10 +472,8 @@ var WebSqlDB = function (successCallback, errorCallback) {
         this.db.transaction(
             function (tx) {
                 var sql = "INSERT INTO super_mercado (nomemercado, fotmer, ativo) VALUES (?, ?, ?)";
-                alert(parsedJson.fotmer);
                 tx.executeSql(sql, [parsedJson.nomemercado, parsedJson.fotmer, parsedJson.ativo], function (tx, result) {
                     // If results rows
-                    alert(result.message);
                     callback(result.rowsAffected === 1 ? true : false);
                 });
             }

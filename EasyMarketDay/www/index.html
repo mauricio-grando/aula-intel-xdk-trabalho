@@ -343,9 +343,9 @@
                 </div>
             </div>
             <div id="sbcomprar-total" class="upage-content vertical-col left hidden">
-                <input type="hidden" value="" id="valorTotalProdutos" />
-                <input type="hidden" value="" id="mercadoSelecionado" />
-                <input type="hidden" value="" id="sql" />
+                <input type="hidden" value="" id="valorTotalProdutos">
+                <input type="hidden" value="" id="mercadoSelecionado">
+                <input type="hidden" value="" id="sql">
 
                 <div class="tarea widget uib_w_38 d-margins" data-uib="media/text" data-ver="0" name="uib_w_38" style="text-align: center; font-size: 150%; padding-top: 25px;">
                     <div class="widget-container left-receptacle"></div>
@@ -372,7 +372,7 @@
                     </div>
                 </div>
             </div>
-            <div id="sbcompra-sucesso" class="upage-content vertical-col left hidden" style="top: 75px; height: 215px;">
+            <div id="sbcompra-sucesso" class="upage-content vertical-col left hidden" style="top: 75px !important; height: 270px; text-align: center;">
                 <div class="tarea widget uib_w_45 d-margins" data-uib="media/text" data-ver="0" name="uib_w_45">
                     <div class="widget-container left-receptacle"></div>
                     <div class="widget-container right-receptacle"></div>
@@ -383,9 +383,11 @@
 
                         <p>Agora você só precisa passar no supermercado para fazer o pagamento e a retirada dos itens.</p>
 
-                        <p><strong>Esperamos sempre tê-lo conosco ;)</strong></p>
+                        <p><strong>Esperamos sempre tê-lo conosco ;)</strong>
+                        </p>
                     </div>
                 </div>
+                <button style="width: 187px; height: 60px;" class="button widget uib_w_46 d-margins ion button-assertive ion-android-system-back" data-uib="ionic/button" data-ver="0" id="btnvoltarpedido" ng-controller="uib_w_39_popup_controller" ng-click="cancelar()">Voltar</button>
             </div>
         </div>
     </div>

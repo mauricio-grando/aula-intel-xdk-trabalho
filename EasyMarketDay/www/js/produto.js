@@ -105,12 +105,17 @@ function editarProduto(codprod) {
             }
         });
 
+        var foto = produto.fotprod;
+        if (!foto || foto === "undefined") {
+            foto = "images/camera.png";
+        }
+
         $("#selmercadoproduto").val(produto.codmer);
         $("#selcatproduto").val(produto.codcat);
         $("#nomeproduto").val(produto.nomeprod);
         $("#descricaoproduto").val(produto.descprod);
         $("#precoproduto").val(produto.preco);
-        $("#imgproduto").attr('src', produto.fotprod);
+        $("#imgproduto").attr('src', foto);
 
         $("#btnsalvarproduto").attr("onclick", "salvarProduto(" + codprod + ")");
 
@@ -120,8 +125,6 @@ function editarProduto(codprod) {
 }
 
 function salvarProduto(codprod) {
-
-    alert('salvando');
 
     if ($("#nomeproduto").val() === "") {
         navigator.notification.alert(
@@ -147,7 +150,6 @@ function salvarProduto(codprod) {
         );
 
     } else if (!codprod) {
-        alert('insert');
 
         db.insertProduto(JSON.stringify({
             "nomeprod": $("#nomeproduto").val(),
@@ -156,8 +158,8 @@ function salvarProduto(codprod) {
             "codmer": $("#selmercadoproduto").val(),
             "preco": $("#precoproduto").val(),
             "catprod": $("#selcatproduto").val()
+
         }), function (result) {
-            alert(result);
             var status = result.rowsAffected === 1 ? true : false;
 
             if (status === true) {
@@ -173,16 +175,16 @@ function salvarProduto(codprod) {
         listarProdutos();
 
     } else {
-        alert('update');
         db.updateProduto(JSON.stringify({
             "nomeprod": $("#nomeproduto").val(),
             "descprod": $("#descricaoproduto").val(),
-            "fotprod": $("#imgprpduto").val(),
+            "fotprod": $("#imgproduto").attr("src"),
             "preco": $("#precoproduto").val(),
             "catprod": $("#selcatproduto").val(),
             "codmer": $("#selmercadoproduto").val(),
             "ativo": 1,
             "codprod": codprod
+
         }), function (status) {
             if (status === true) {
                 navigator.notification.alert(
@@ -193,8 +195,6 @@ function salvarProduto(codprod) {
                 );
             }
         });
-
-        alert($("#imgproduto").val());
 
         listarProdutos();
     }
