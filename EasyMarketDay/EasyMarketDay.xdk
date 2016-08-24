@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-ad-project/sample.zip",
       "projectGuid": "b22c7ab3-c286-48f9-ac48-f372d64a7a5c",
-      "lastModifiedDate": 1470963720436,
+      "lastModifiedDate": 1471912502492,
       "creationDate": 1470502879055
     },
     "XDK-app-designer": "true",
@@ -138,6 +138,30 @@
           ]
         },
         "description": "Cordova Camera Plugin",
+        "data": {},
+        "dependedBy": []
+      },
+      {
+        "id": "cordova-plugin-contacts",
+        "name": "Contacts",
+        "version": "2.0.1",
+        "originType": "cordova.io",
+        "origin": "cordova-plugin-contacts",
+        "gitref": "",
+        "paramvals": {},
+        "sourceLocation": "plugins/cordova-plugin-contacts",
+        "selectedState": "Included",
+        "checksum": "c849251f",
+        "dependsOn": [],
+        "topLevel": true,
+        "permissions": {
+          "android:name": [
+            "android.permission.READ_CONTACTS",
+            "android.permission.WRITE_CONTACTS",
+            "android.permission.GET_ACCOUNTS"
+          ]
+        },
+        "description": "Cordova Contacts Plugin",
         "data": {},
         "dependedBy": []
       }

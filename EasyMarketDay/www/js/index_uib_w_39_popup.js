@@ -18,12 +18,18 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
 
     $scope.avancar = function () {
         if ($("#selMercadoCompra").val() === "") {
-            navigator.notification.alert(
-                'Por favor selecione o supermercado.',
-                function (idx) {},
-                'Alerta',
-                'OK'
-            );
+            var confirmPopup = $ionicPopup.alert({
+                title: 'Alerta',
+                template: 'Por favor selecione o supermercado.',
+                buttons: [
+                    {
+                        text: 'OK',
+                        type: 'button-positivo',
+                        onTap: function (e) {
+                            $scope.close;
+                        }
+                        }]
+            });
 
         } else {
             var mercado = $("#selMercadoCompra").val();
@@ -38,10 +44,13 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
                         foto = "images/camera.png";
                     }
 
+                    var preco = produtos[i].preco.toFixed(2);
+                    preco = preco.replace('.', ',');
+
                     $("#lstprodutoscompra").prepend(
                         '<ion-item id="' + produtos[i].codprod + '" class="item widget uib_w_6 item-button-right" data-uib="ionic/list_item" data-ver="0"> ' +
                         '<div style="float: left"><img src="' + foto + '" height="50" width="50"> ' +
-                        produtos[i].nomeprod + ' - ' + produtos[i].nomecat + ' - R$' + produtos[i].preco + ' </div>' +
+                        produtos[i].nomeprod + ' - ' + produtos[i].nomecat + ' - R$ ' + preco + ' </div>' +
                         '<label class="checkbox" style="float: right;"> ' +
                         '<input type="checkbox" name="produto-compra" value="' + produtos[i].codprod + '">Adicionar</label> ' +
                         '<label class="item item-input d-margins" style="float: right;"> ' +
@@ -80,12 +89,18 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
         $("#sql").val(sql);
 
         if (count === 0) {
-            navigator.notification.alert(
-                'Por favor selecione pelo menos um produto para compra.',
-                function (idx) {},
-                'Alerta',
-                'OK'
-            );
+            var confirmPopup = $ionicPopup.alert({
+                title: 'Alerta',
+                template: 'Por favor selecione pelo menos um produto para compra.',
+                buttons: [
+                    {
+                        text: 'OK',
+                        type: 'button-positivo',
+                        onTap: function (e) {
+                            $scope.close;
+                        }
+                        }]
+            });
 
         } else {
             var qtdProdutos = 0;
@@ -142,7 +157,7 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
                     for (var i = 0; i < produtosdacompra.length; i++) {
 
                         var qtd = $("#qtd_" + produtosdacompra[i].codprod).val();
-                        var preco = Number(produtosdacompra[i].preco);;
+                        var preco = Number(produtosdacompra[i].preco);
 
                         var total = parseFloat(preco) * qtd;
 
@@ -154,7 +169,11 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
                             "totalprod": total
 
                         }), function (result) {
-
+                            var status = result.rowsAffected === 1 ? true : false;
+                            if (status === true) {
+                                $("#id-pedido").html("O código de seu pedido é <strong>" + codComp + "</strong>");
+                            }
+                            intel.xdk.contacts.chooseContact();
                         });
                     }
                 });

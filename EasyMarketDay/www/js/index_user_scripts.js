@@ -29,6 +29,29 @@ function erro(error) {
 
     }
     document.addEventListener("app.Ready", register_event_handlers, false);
+
+    document.addEventListener('intel.xdk.contacts.choose', function (evt) {
+        if (evt.success == true) {
+            var contactID = evt.contactid;
+
+            //this function retirves infotmation of a contact based on its id.
+            var contactInfo = intel.xdk.contacts.getContactData(contactID);
+            if (contactInfo != null) {
+                alert(contactInfo);
+
+                var firstName = contactInfo.first;
+                var lastName = contactInfo.last;
+                var phoneNumbers = contactInfo.phones;
+                var emails = contactInfo.emails;
+                var address = contactInfo.addresses;
+
+                alert(firstName + lastName + phoneNumbers);
+            } else {
+                alert('nul');
+            }
+        } else if (evt.cancelled == true) {}
+    });
+
 })();
 
 function deletarSupermercado(codmer) {

@@ -2,19 +2,19 @@ function uib_w_25_popup_controller($scope, $ionicPopup) {
 
     // A confirm dialog
     $scope.sair = function () {
-        var confirmPopup = $ionicPopup.confirm({
-            title: 'Sair',
-            template: 'Você deseja realmente sair?',
-            okText: 'Sair',
-            cancelText: 'Cancelar'
-        });
-        confirmPopup.then(function (res) {
-            if (res) {
-                navigator.app.exitApp();
-            } else {
-                return false;
-            }
-        });
+        navigator.notification.confirm(
+            "Você deseja realmente sair?",
+            function (idx) {
+                if (idx === 1) {
+                    navigator.app.exitApp();
+                } else {
+                    return false;
+                }
+            },
+            'Sair',
+            'OK',
+            'Cancelar'
+        );
     };
 
 };
