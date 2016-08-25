@@ -50,11 +50,12 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
                     $("#lstprodutoscompra").prepend(
                         '<ion-item id="' + produtos[i].codprod + '" class="item widget uib_w_6 item-button-right" data-uib="ionic/list_item" data-ver="0"> ' +
                         '<div style="float: left"><img src="' + foto + '" height="50" width="50"> ' +
-                        produtos[i].nomeprod + ' - ' + produtos[i].nomecat + ' - R$ ' + preco + ' </div>' +
+                        produtos[i].nomeprod + ' - ' + produtos[i].nomecat + '<br/>' +
+                        'R$ ' + preco + '</div></br> ' +
                         '<label class="checkbox" style="float: right;"> ' +
                         '<input type="checkbox" name="produto-compra" value="' + produtos[i].codprod + '">Adicionar</label> ' +
-                        '<label class="item item-input d-margins" style="float: right;"> ' +
-                        '<input type="number" min="1" id="qtd_' + produtos[i].codprod + '" value="1"></label> ' +
+                        '<label class="item item-input d-margins" style="float: right; width: 30px;"> ' +
+                        '<input type="number" onblur="checkVal(this);" id="qtd_' + produtos[i].codprod + '" value="1"></label> ' +
                         '</ion-item>'
                     );
                 }
@@ -171,9 +172,8 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
                         }), function (result) {
                             var status = result.rowsAffected === 1 ? true : false;
                             if (status === true) {
-                                $("#id-pedido").html("O código de seu pedido é <strong>" + codComp + "</strong>");
+                                $("#id-pedido").html("O código de seu pedido é <strong>#" + codComp + "</strong>");
                             }
-                            intel.xdk.contacts.chooseContact();
                         });
                     }
                 });

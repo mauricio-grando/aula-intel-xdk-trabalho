@@ -30,14 +30,17 @@ function erro(error) {
     }
     document.addEventListener("app.Ready", register_event_handlers, false);
 
+    // snippet retirado de https://github.com/01org/cordova-plugin-intel-xdk-contacts
     document.addEventListener('intel.xdk.contacts.choose', function (evt) {
         if (evt.success == true) {
+            // inicializando a variável
+            var contactList = intel.xdk.contacts.getContactList();
+            alert(contactList);
+
             var contactID = evt.contactid;
 
-            //this function retirves infotmation of a contact based on its id.
             var contactInfo = intel.xdk.contacts.getContactData(contactID);
             if (contactInfo != null) {
-                alert(contactInfo);
 
                 var firstName = contactInfo.first;
                 var lastName = contactInfo.last;
@@ -45,9 +48,14 @@ function erro(error) {
                 var emails = contactInfo.emails;
                 var address = contactInfo.addresses;
 
-                alert(firstName + lastName + phoneNumbers);
+                alert(firstName + ' - ' + lastName + ' - ' + phoneNumbers);
+
+                var tel = 'tel:+1231313';
+                $("#ligar-mercado").attr("href", tel.concat(phoneNumbers[0]));
+                $("#ligar-mercado").click();
+
             } else {
-                alert('nul');
+                alert('null');
             }
         } else if (evt.cancelled == true) {}
     });
@@ -81,4 +89,16 @@ function deletarSupermercado(codmer) {
         },
         "Alerta", ['OK', 'Cancelar']
     );
+}
+
+// verifica se a quantidade é maior que zero
+// se não for, seta 1
+function checkVal(elem) {
+    if (elem.value < 1) {
+        elem.value = 1;
+    }
+}
+
+function ligarMercado() {
+    intel.xdk.contacts.chooseContact();
 }

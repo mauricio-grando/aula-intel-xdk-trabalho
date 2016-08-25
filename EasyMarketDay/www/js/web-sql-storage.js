@@ -564,7 +564,7 @@ var WebSqlDB = function (successCallback, errorCallback) {
                 });
             },
             function (tx, error) {
-                alert("insertComprasProdutos Error: " + error);
+                alert("insertComprasProdutos Error: " + error.message);
             }
         );
     };
@@ -588,8 +588,8 @@ var WebSqlDB = function (successCallback, errorCallback) {
         this.db.transaction(
             function (tx) {
                 var sql = "select c.codprod, count(*) as total , p.nomeprod as nome, c.nomecat as categoria " +
-                          "from compras_produtos c inner join produto p inner join categorias_produto c " +
-                          "where c.codprod = p.codprod and p.catprod = c.codcat group by c.codprod order by total DESC limit 1";
+                    "from compras_produtos c inner join produto p inner join categorias_produto c " +
+                    "where c.codprod = p.codprod and p.catprod = c.codcat group by c.codprod order by total DESC limit 1";
                 tx.executeSql(sql, [], function (tx, results) {
                     callback(results.rows.length === 1 ? results.rows.item(0) : null);
                 });
@@ -604,9 +604,9 @@ var WebSqlDB = function (successCallback, errorCallback) {
         this.db.transaction(
             function (tx) {
                 // var sql = "select * FROM super_mercado WHERE codmer IN (SELECT codmer FROM produto WHERE ativo = 1) and ativo = 1 ORDER BY nomemercado ASC";
-                var sql = "select avg(c.total) as media, s.nomemercado as mercado " + 
-                          "from compras c inner join super_mercado s " +
-                          "where c.codmer = s.codmer group by c.codmer";
+                var sql = "select avg(c.total) as media, s.nomemercado as mercado " +
+                    "from compras c inner join super_mercado s " +
+                    "where c.codmer = s.codmer group by c.codmer";
                 tx.executeSql(sql, [], function (tx, results) {
                     var len = results.rows.length,
                         supermercados = [],

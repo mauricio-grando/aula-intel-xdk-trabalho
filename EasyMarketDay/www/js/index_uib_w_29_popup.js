@@ -29,10 +29,10 @@ function uib_w_29_popup_controller($scope, $ionicPopup) {
 
     $scope.adicionar = function () {
         activate_subpage("#sbsupermercados");
-        $scope.showMap();
     };
 
     $scope.salvar = function () {
+        $scope.mapPosition();
         if ($("#nomemercado").val() === "") {
             var confirmPopup = $ionicPopup.alert({
                 title: 'Alerta',
@@ -82,14 +82,22 @@ function uib_w_29_popup_controller($scope, $ionicPopup) {
 
     $scope.mapPosition = function () {
         navigator.geolocation.getCurrentPosition(function (position) {
-            alert('Latitude: ' + position.coords.latitude + '\n' +
-                'Longitude: ' + position.coords.longitude + '\n' +
-                'Altitude: ' + position.coords.altitude + '\n' +
-                'Accuracy: ' + position.coords.accuracy + '\n' +
-                'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '\n' +
-                'Heading: ' + position.coords.heading + '\n' +
-                'Speed: ' + position.coords.speed + '\n' +
-                'Timestamp: ' + position.timestamp + '\n');
+            var confirmPopup = $ionicPopup.alert({
+                title: 'Coordenadas Atuais',
+                template: 'Latitude: ' + position.coords.latitude + '<br/>' +
+                    'Longitude: ' + position.coords.longitude + '<br/>' +
+                    'Altitude: ' + position.coords.altitude + '<br/>' +
+                    'Acuracidade: ' + position.coords.accuracy + '<br/>' +
+                    'Velocidade: ' + position.coords.speed + '<br/>',
+                buttons: [
+                    {
+                        text: 'OK',
+                        type: 'button-positivo',
+                        onTap: function (e) {
+                            $scope.close;
+                        }
+                        }]
+            });
 
         }, function (error) {
             if (error.code == PositionError.PERMISSION_DENIED) {
