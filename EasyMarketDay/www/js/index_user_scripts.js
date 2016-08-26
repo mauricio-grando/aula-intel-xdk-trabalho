@@ -32,32 +32,24 @@ function erro(error) {
 
     // snippet retirado de https://github.com/01org/cordova-plugin-intel-xdk-contacts
     document.addEventListener('intel.xdk.contacts.choose', function (evt) {
-        if (evt.success == true) {
-            // inicializando a variável
-            var contactList = intel.xdk.contacts.getContactList();
-            alert(contactList);
+        if (evt.success === true) {
 
+            // inicializando a lista de contatos
+            intel.xdk.contacts.getContacts();
+
+            // pega o contato selecionado
             var contactID = evt.contactid;
 
-            var contactInfo = intel.xdk.contacts.getContactData(contactID);
-            if (contactInfo != null) {
+            var contactObj = intel.xdk.contacts.getContactData(contactID);
+            if (contactObj !== null) {
 
-                var firstName = contactInfo.first;
-                var lastName = contactInfo.last;
-                var phoneNumbers = contactInfo.phones;
-                var emails = contactInfo.emails;
-                var address = contactInfo.addresses;
-
-                alert(firstName + ' - ' + lastName + ' - ' + phoneNumbers);
-
-                var tel = 'tel:+1231313';
-                $("#ligar-mercado").attr("href", tel.concat(phoneNumbers[0]));
-                $("#ligar-mercado").click();
-
-            } else {
-                alert('null');
+                var tel = 'tel:+';
+                $("#ligar-mercado").attr("href", tel.concat(contactObj.phones[0]));
+                //$("#ligar-mercado").click();
             }
-        } else if (evt.cancelled == true) {}
+
+        } else if (evt.cancelled === true) {}
+        //activate_subpage("#sbcompra-sucesso");
     });
 
 })();

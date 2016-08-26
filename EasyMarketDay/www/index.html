@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html>
-<!--
-  * Please see the included README.md file for license terms and conditions.
-  -->
 
 <head>
     <meta charset="UTF-8">
@@ -111,15 +108,13 @@
 
 <body ng-app="myApp">
 
-    <!-- IMPORTANT: Do not include a weinre script tag as part of your release builds! -->
-    <!-- Place your remote debugging (weinre) script URL from the Test tab here, if it does not work above -->
-    <!-- <script src="http://debug-software.intel.com/target/target-script-min.js#insertabiglongfunkynumberfromthexdkstesttab"></script> -->
     <div class="upage" id="mainpage">
         <div class="upage-outer">
             <div class="upage-content ac0 content-area vertical-col left" id="page_23_71">
                 <template class="uib-ionic-popup widget uib_w_25 d-margins" data-uib="ionic/popup" data-ver="0"></template>
                 <template class="uib-ionic-popup widget uib_w_26 d-margins" data-uib="ionic/popup" data-ver="0"></template>
             </div>
+
             <ion-header-bar class="bar inner-element uib_w_1 bar-assertive bar-header" data-uib="ionic/header" data-ver="0" id="header" align-title="center" style="height: 50px;">
                 <img src="images/cart.png" style="margin-left: 10px;">
                 <div class="buttons widget-container content-area horiz-area wrapping-col"></div>
@@ -128,6 +123,7 @@
                     <button class="button widget uib_w_9 d-margins ion button-outline ion-android-user-menu icon-only" data-uib="ionic/button" data-ver="0" id="btnmenu"></button>
                 </div>
             </ion-header-bar>
+
             <ion-footer-bar class="bar inner-element uib_w_2 bar-assertive bar-footer" data-uib="ionic/footer" data-ver="0" id="footer">
                 <div class="buttons widget-container content-area horiz-area wrapping-col"></div>
                 <h1 class="title"></h1>
@@ -159,6 +155,7 @@
                     <button class="button widget uib_w_24 d-margins ion button-dark ion-ios7-close-outline icon-left" data-uib="ionic/button" data-ver="0" id="btnsair" ng-controller="uib_w_25_popup_controller" ng-click="sair()">Sair</button>
                 </div>
             </div>
+
             <div id="sbsupermercados" class="upage-content vertical-col left hidden">
                 <div class="widget uib_w_10 scale-image d-margins" data-uib="media/img" data-ver="0">
                     <figure class="figure-align" style="text-align: center">
@@ -191,6 +188,7 @@
                 <br>
                 <template class="uib-ionic-popup widget uib_w_29 d-margins" data-uib="ionic/popup" data-ver="0"></template>
             </div>
+
             <div id="sblsupermercados" class="upage-content vertical-col hidden" style="text-align: right;">
                 <div class="tarea widget uib_w_38 d-margins" data-uib="media/text" data-ver="0" name="uib_w_38" style="text-align: center; font-size: 150%; padding-top: 25px;">
                     <div class="widget-container left-receptacle"></div>
@@ -208,6 +206,7 @@
                     </ion-list>
                 </ion-scroll>
             </div>
+
             <div id="sbprodutos" class="upage-content vertical-col left hidden" style="top: 20px;">
                 <div class="widget uib_w_10 scale-image d-margins" data-uib="media/img" data-ver="0">
                     <figure class="figure-align" style="text-align: center">
@@ -249,6 +248,7 @@
                 <br>
                 <template class="uib-ionic-popup widget uib_w_37 d-margins" data-uib="ionic/popup" data-ver="0"></template>
             </div>
+
             <div id="sblprodutos" class="upage-content vertical-col hidden" style="text-align: right;">
                 <div class="tarea widget uib_w_38 d-margins" data-uib="media/text" data-ver="0" name="uib_w_38" style="text-align: center; font-size: 150%; padding-top: 25px;">
                     <div class="widget-container left-receptacle"></div>
@@ -266,6 +266,7 @@
                     </ion-list>
                 </ion-scroll>
             </div>
+
             <div id="sbcomprar-mercado" class="upage-content vertical-col left hidden">
                 <div class="tarea widget uib_w_38 d-margins" data-uib="media/text" data-ver="0" name="uib_w_38" style="text-align: center; font-size: 150%; padding-top: 25px;">
                     <div class="widget-container left-receptacle"></div>
@@ -299,6 +300,7 @@
                     </div>
                 </div>
             </div>
+
             <div id="sbcomprar-produtos" class="upage-content vertical-col left hidden">
                 <div class="tarea widget uib_w_38 d-margins" data-uib="media/text" data-ver="0" name="uib_w_38" style="text-align: center; font-size: 150%; padding-top: 25px;">
                     <div class="widget-container left-receptacle"></div>
@@ -334,6 +336,7 @@
                     </div>
                 </div>
             </div>
+
             <div id="sbcomprar-total" class="upage-content vertical-col left hidden">
                 <input type="hidden" value="" id="valorTotalProdutos">
                 <input type="hidden" value="" id="mercadoSelecionado">
@@ -364,6 +367,7 @@
                     </div>
                 </div>
             </div>
+
             <div id="sbcompra-sucesso" class="upage-content vertical-col left hidden" style="top: 100px !important; height: 300px; text-align: center; padding-left: 10px;">
                 <div class="tarea widget uib_w_45 d-margins" data-uib="media/text" data-ver="0" name="uib_w_45">
                     <div class="widget-container left-receptacle"></div>
@@ -377,9 +381,10 @@
 
                         <p><strong>Esperamos sempre tê-lo conosco ;)</strong>
                         </p>
-                    </div>
 
-                    <a id="ligar-mercado" href="javascript:void(0);" onclick="ligarMercado();">Ligar para supermercado</a>
+                        <img src="images/call.png" style="margin-left: 10px;">
+                        <a id="ligar-mercado" href="javascript:void(0);" onclick="ligarMercado();">Ligar para supermercado</a>
+                    </div>
                 </div>
                 <div class="uib-grid widget uib_w_44 grid-text grid-height d-margins" data-uib="layout/grid" data-ver="1" style="height: 60px;">
                     <div class="uib-grid-row">
@@ -390,6 +395,7 @@
                 </div>
                 <br/>
             </div>
+
             <div id="sbrelatorios" class="upage-content vertical-col left hidden" style="padding-left: 10px !important;">
                 <ion-scroll zooming="true" direction="xy">
                     <div class="tarea widget uib_w_38 d-margins" data-uib="media/text" data-ver="0" name="uib_w_38" style="text-align: center; font-size: 150%; padding-top: 25px;">
