@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-ad-project/sample.zip",
       "projectGuid": "b22c7ab3-c286-48f9-ac48-f372d64a7a5c",
-      "lastModifiedDate": 1472174853179,
+      "lastModifiedDate": 1472176540256,
       "creationDate": 1470502879055
     },
     "XDK-app-designer": "true",
@@ -196,9 +196,28 @@
           ],
           "navigation": []
         },
-        "icons_": [],
+        "icons_": [
+          {
+            "relPath": "images/36.png",
+            "density": "ldpi",
+            "height": 36,
+            "width": 36
+          },
+          {
+            "relPath": "images/72.png",
+            "density": "hdpi",
+            "height": 72,
+            "width": 72
+          },
+          {
+            "relPath": "images/Cart2 (1).png",
+            "density": "mdpi",
+            "height": 48,
+            "width": 48
+          }
+        ],
         "splashes_": [],
-        "addlPermissions_": "READ_CONTACTS",
+        "addlPermissions_": "android.permission.READ_CONTACTS;android.permission.ACCESS_FINE_LOCATION",
         "excludedLibraries_": "",
         "certificateId_": "E8pRPUwt-kmJN39vDpOjmQ2",
         "cordovaCLIVersion_": "5.4.1",
