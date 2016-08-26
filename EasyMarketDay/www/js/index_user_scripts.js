@@ -42,7 +42,6 @@ function erro(error) {
 
             var contactObj = intel.xdk.contacts.getContactData(contactID);
             if (contactObj !== null) {
-
                 var tel = 'tel:+';
                 $("#ligar-mercado").attr("href", tel.concat(contactObj.phones[0]));
                 //$("#ligar-mercado").click();

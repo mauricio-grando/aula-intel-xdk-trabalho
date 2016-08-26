@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-ad-project/sample.zip",
       "projectGuid": "b22c7ab3-c286-48f9-ac48-f372d64a7a5c",
-      "lastModifiedDate": 1471912502492,
+      "lastModifiedDate": 1472174853179,
       "creationDate": 1470502879055
     },
     "XDK-app-designer": "true",
@@ -198,9 +198,9 @@
         },
         "icons_": [],
         "splashes_": [],
-        "addlPermissions_": "",
+        "addlPermissions_": "READ_CONTACTS",
         "excludedLibraries_": "",
-        "certificateId_": "BMBWVd9xQEiiuMA28jdHlg2",
+        "certificateId_": "E8pRPUwt-kmJN39vDpOjmQ2",
         "cordovaCLIVersion_": "5.4.1",
         "crosswalkVersion_": "18",
         "appVersion_": "0.0.1",
@@ -216,7 +216,7 @@
           "ios-configuration": "adhoc",
           "deployment-target": "8.0"
         },
-        "isActive_": true,
+        "isActive_": false,
         "appName_": "EasyMarketDay",
         "appID_": "xdk.intel.blank.ad.template",
         "appAccess_": {
@@ -257,7 +257,7 @@
           "windows-publisher-display-name": "",
           "windows-publisher-id": ""
         },
-        "isActive_": true,
+        "isActive_": false,
         "appName_": "EasyMarketDay",
         "appID_": "xdk.intel.blank.ad.template",
         "appAccess_": {
