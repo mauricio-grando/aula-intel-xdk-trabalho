@@ -177,6 +177,7 @@ function uib_w_39_popup_controller($scope, $ionicPopup) {
                         });
                     }
                 });
+
             }
 
             activate_subpage("#sbcompra-sucesso");

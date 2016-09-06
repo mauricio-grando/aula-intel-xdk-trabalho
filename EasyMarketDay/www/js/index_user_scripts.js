@@ -30,26 +30,6 @@ function erro(error) {
     }
     document.addEventListener("app.Ready", register_event_handlers, false);
 
-    // snippet retirado de https://github.com/01org/cordova-plugin-intel-xdk-contacts
-    document.addEventListener('intel.xdk.contacts.choose', function (evt) {
-        if (evt.success === true) {
-
-            // inicializando a lista de contatos
-            intel.xdk.contacts.getContacts();
-
-            // pega o contato selecionado
-            var contactID = evt.contactid;
-
-            var contactObj = intel.xdk.contacts.getContactData(contactID);
-            if (contactObj !== null) {
-                var tel = 'tel:+';
-                $("#ligar-mercado").attr("href", tel.concat(contactObj.phones[0]));
-                //$("#ligar-mercado").click();
-            }
-
-        } else if (evt.cancelled === true) {}
-        //activate_subpage("#sbcompra-sucesso");
-    });
 
 })();
 
@@ -91,5 +71,35 @@ function checkVal(elem) {
 }
 
 function ligarMercado() {
-    intel.xdk.contacts.chooseContact();
+    navigator.contacts.pickContact(function (contact) {
+
+        var phone = contact.phoneNumbers[0].value;
+        var phoneComplete = "tel:+".concat(phone);
+
+        if (phone) {
+            $("#ligar-mercado-aux").attr("href", phoneComplete);
+
+            navigator.notification.confirm(
+                "Deseja ligar para " + contact.displayName + "?",
+                function (idx) {
+                    if (idx === 1) {
+                        $("#ligar-mercado-aux").click();
+                    }
+                }
+            );
+
+        } else {
+            navigator.notification.alert(
+                'O contato não é válido.',
+                function (idx) {},
+                'Alerta',
+                'OK'
+            );
+        }
+
+        //alert('Contato selecionado: ' + JSON.stringify(contact));
+
+    }, function (err) {
+        alert('Error: ' + err);
+    });
 }
