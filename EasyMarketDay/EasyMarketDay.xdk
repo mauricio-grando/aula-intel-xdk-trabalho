@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-ad-project/sample.zip",
       "projectGuid": "b22c7ab3-c286-48f9-ac48-f372d64a7a5c",
-      "lastModifiedDate": 1472176540256,
+      "lastModifiedDate": 1483055243596,
       "creationDate": 1470502879055
     },
     "XDK-app-designer": "true",
@@ -76,7 +76,7 @@
         "gitref": "",
         "name": "Splashscreen",
         "description": "Cordova Splashscreen Plugin",
-        "checksum": "452a4659"
+        "checksum": "c8aeabaf"
       },
       {
         "id": "cordova-plugin-geolocation",
@@ -129,7 +129,7 @@
         "paramvals": {},
         "sourceLocation": "plugins/cordova-plugin-camera",
         "selectedState": "Included",
-        "checksum": "b5eb9803",
+        "checksum": "2846c0c0",
         "dependsOn": [],
         "topLevel": true,
         "permissions": {
@@ -178,6 +178,7 @@
           "android-signed": true
         },
         "isActive_": true,
+        "certificateId_": "E8pRPUwt-kmJN39vDpOjmQ2",
         "appName_": "EasyMarketDay",
         "appID_": "xdk.intel.blank.ad.template.crosswalk",
         "appAccess_": {
@@ -219,7 +220,6 @@
         "splashes_": [],
         "addlPermissions_": "android.permission.READ_CONTACTS;android.permission.ACCESS_FINE_LOCATION",
         "excludedLibraries_": "",
-        "certificateId_": "E8pRPUwt-kmJN39vDpOjmQ2",
         "cordovaCLIVersion_": "5.4.1",
         "crosswalkVersion_": "18",
         "appVersion_": "0.0.1",
@@ -236,6 +236,7 @@
           "deployment-target": "8.0"
         },
         "isActive_": false,
+        "certificateId_": "",
         "appName_": "EasyMarketDay",
         "appID_": "xdk.intel.blank.ad.template",
         "appAccess_": {
@@ -260,7 +261,6 @@
         "splashes_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
-        "certificateId_": "",
         "iosProvs_": [],
         "cordovaCLIVersion_": "5.4.1",
         "crosswalkVersion_": "18",
@@ -277,6 +277,7 @@
           "windows-publisher-id": ""
         },
         "isActive_": false,
+        "certificateId_": "",
         "appName_": "EasyMarketDay",
         "appID_": "xdk.intel.blank.ad.template",
         "appAccess_": {
@@ -292,7 +293,6 @@
         "splashes_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
-        "certificateId_": "",
         "cordovaCLIVersion_": "5.4.1",
         "crosswalkVersion_": "18",
         "appVersion_": "0.0.0.1",
@@ -305,6 +305,7 @@
         "name_": "WebApp",
         "preferences_": {},
         "isActive_": false,
+        "certificateId_": "",
         "appName_": "EasyMarketDay",
         "appID_": "not.yet.specified",
         "appAccess_": {
@@ -319,7 +320,6 @@
         "splashes_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
-        "certificateId_": "",
         "appAuthor_": "Intel XDK",
         "appVersion_": "0.0.1"
       },
@@ -329,6 +329,7 @@
         "name_": "Chrome",
         "preferences_": {},
         "isActive_": false,
+        "certificateId_": "",
         "appName_": "EasyMarketDay",
         "appID_": "not.yet.specified",
         "appAccess_": {
@@ -343,7 +344,6 @@
         "splashes_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
-        "certificateId_": "",
         "appAuthor_": "Intel XDK",
         "appVersion_": "0.0.1"
       },
@@ -353,6 +353,7 @@
         "name_": "Firefox",
         "preferences_": {},
         "isActive_": false,
+        "certificateId_": "",
         "appName_": "EasyMarketDay",
         "appID_": "not.yet.specified",
         "appAccess_": {
@@ -367,7 +368,6 @@
         "splashes_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
-        "certificateId_": "",
         "appAuthor_": "Intel XDK",
         "appVersion_": "0.0.1"
       },
@@ -377,6 +377,7 @@
         "name_": "Facebook",
         "preferences_": {},
         "isActive_": false,
+        "certificateId_": "",
         "appName_": "EasyMarketDay",
         "appID_": "not.yet.specified",
         "appAccess_": {
@@ -391,7 +392,6 @@
         "splashes_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
-        "certificateId_": "",
         "appAuthor_": "Intel XDK",
         "appVersion_": "0.0.1"
       },
@@ -401,6 +401,7 @@
         "name_": "WP81",
         "preferences_": {},
         "isActive_": true,
+        "certificateId_": "",
         "appName_": "EasyMarketDay",
         "appID_": "not.yet.specified",
         "appAccess_": {
@@ -415,7 +416,6 @@
         "splashes_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
-        "certificateId_": "",
         "appVersion_": "0.0.0.1",
         "cordovaCLIVersion_": "5.4.1",
         "appAuthor_": "Intel XDK"
@@ -423,7 +423,9 @@
     },
     "gameAssetDirectory": "asset",
     "gameMetadata": {},
-    "projectTags": [],
+    "projectTags": [
+      "XDK-disallow-legacy-whitelist"
+    ],
     "testDirectory": "test"
   }
 }
