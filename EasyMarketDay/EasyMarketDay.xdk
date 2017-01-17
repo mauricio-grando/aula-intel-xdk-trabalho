@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.jsapp",
       "src": "jsapp/template-blank-cordova-ad-project/sample.zip",
       "projectGuid": "b22c7ab3-c286-48f9-ac48-f372d64a7a5c",
-      "lastModifiedDate": 1482688414437,
+      "lastModifiedDate": 1483055243596,
       "creationDate": 1470502879055
     },
     "XDK-app-designer": "true",
@@ -76,7 +76,7 @@
         "gitref": "",
         "name": "Splashscreen",
         "description": "Cordova Splashscreen Plugin",
-        "checksum": "452a4659"
+        "checksum": "c8aeabaf"
       },
       {
         "id": "cordova-plugin-geolocation",
@@ -129,7 +129,7 @@
         "paramvals": {},
         "sourceLocation": "plugins/cordova-plugin-camera",
         "selectedState": "Included",
-        "checksum": "b5eb9803",
+        "checksum": "2846c0c0",
         "dependsOn": [],
         "topLevel": true,
         "permissions": {
@@ -235,7 +235,7 @@
           "ios-configuration": "adhoc",
           "deployment-target": "8.0"
         },
-        "isActive_": true,
+        "isActive_": false,
         "certificateId_": "",
         "appName_": "EasyMarketDay",
         "appID_": "xdk.intel.blank.ad.template",
@@ -265,7 +265,7 @@
           "windows-publisher-display-name": "",
           "windows-publisher-id": ""
         },
-        "isActive_": true,
+        "isActive_": false,
         "certificateId_": "",
         "appName_": "EasyMarketDay",
         "appID_": "xdk.intel.blank.ad.template",
